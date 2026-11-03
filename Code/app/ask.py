@@ -63,7 +63,7 @@ def _answer_quote_html(q: dict) -> str:
 
 def _show_result(bundle: dict, how: str) -> None:
     status = bundle.get("status")
-    if status == "invalid":
+    if status in ("invalid", "unavailable"):
         st.warning(bundle.get("detail", ""))
         return
     st.markdown(f"**{escape(bundle.get('question', ''))}**")

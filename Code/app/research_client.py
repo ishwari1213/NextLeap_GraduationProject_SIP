@@ -51,6 +51,16 @@ QUOTE_WORDS = 25
 MODES = {"Answer and evidence": "answer", "Evidence only": "evidence"}
 
 
+UNAVAILABLE = ("The evidence store is not part of this deployment, so questions cannot be answered here. The site's "
+               "pages are built from the same pipeline. To ask questions, run the site locally after phases 1 to 4, or "
+               "set API_BASE_URL to a running retrieval API.")
+
+
+def local_store_ready() -> bool:
+    """True when the phase 4 vector store is on this machine, so questions can run in-process."""
+    return (config.VECTOR_DB_DIR / "chroma.sqlite3").exists()
+
+
 @st.cache_resource(show_spinner="Loading the search model (first question only)...")
 def _local_retriever():
     from src.phase5_retrieval.retriever import Retriever
@@ -69,7 +79,8 @@ def api_status() -> dict | None:
 
 def query(question: str, *, app: str | None = None, source: str | None = None,
           mode: str = "answer") -> tuple[dict, str]:
-    """(result, how): the evidence bundle (with `answer` in answer mode), and 'api' or 'local'."""
+    """(result, how): the evidence bundle (with `answer` in answer mode), and 'api' or 'local'.
+    With neither the API nor a local vector store: status 'unavailable' and how ''."""
     payload = {"question": question, **({"app": app} if app else {}), **({"source": source} if source else {})}
     endpoint = "/api/ask" if mode == "answer" else "/api/retrieve"
     try:
@@ -79,11 +90,17 @@ def query(question: str, *, app: str | None = None, source: str | None = None,
         resp.raise_for_status()
         return resp.json(), "api"
     except requests.RequestException:
+        pass
+    if not local_store_ready():
+        return {"status": "unavailable", "detail": UNAVAILABLE}, ""
+    try:
         bundle = _local_retriever().retrieve(question, app=app, source=source)
-        if mode == "answer":
-            from src.answer.generate import answer
-            bundle = {**bundle, "answer": answer(bundle)}
-        return bundle, "local"
+    except Exception as exc:  # a damaged or partial store: say so instead of crashing the page
+        return {"status": "unavailable", "detail": f"The local evidence store could not be searched ({exc})."}, ""
+    if mode == "answer":
+        from src.answer.generate import answer
+        bundle = {**bundle, "answer": answer(bundle)}
+    return bundle, "local"
 
 
 def short(text: str, words: int = QUOTE_WORDS) -> str:

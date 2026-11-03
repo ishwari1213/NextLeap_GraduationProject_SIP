@@ -6,20 +6,21 @@ No number is typed into the site (UI spec rule 2). Every figure comes from:
     Data/embeddings/embedding_report.json               (phase 3)
     Data/vector_db/vector_store_report.json             (phase 4)
     Data/sources/sources.yaml                           (the ingestion URL list)
+Those phase outputs are not committed, so a deployment built from the repository alone reads
+the same figures from Data/site/pipeline.json (written by src/site_export/pipeline.py).
 What the pipeline has not computed yet is listed in NOT_COMPUTED with its reason and the
 missing step, so the pages can show a "Not yet computed" card instead of a number.
 """
 from __future__ import annotations
 
 import json
-from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date
 
 import yaml
 
 from src import config
-from src.jsonl import read_jsonl
+from src.site_export import pipeline
 
 SOURCE_LABELS = {
     "play_store": "Google Play",
@@ -201,35 +202,22 @@ def day_label(iso: str | None) -> str:
 
 
 def load_site_data() -> SiteData:
-    reports = {
-        "phase 1 load report": _json(config.LOAD_REPORT_FILE),
-        "phase 2 chunk report": _json(config.CHUNK_REPORT_FILE),
-        "phase 3 embedding report": _json(config.EMBEDDING_REPORT_FILE),
-        "phase 4 vector store report": _json(config.VECTOR_STORE_REPORT_FILE),
-    }
-    missing = [name for name, data in reports.items() if data is None]
-    if missing or not config.RECORDS_FILE.exists():
-        return SiteData(ready=False, missing=missing + ([] if config.RECORDS_FILE.exists() else ["records.jsonl"]))
-    load, chunk, embed, store = reports.values()
-
-    # records: date span of investor posts, and per-app review windows
-    span: list[str] = []
-    per_app: dict[tuple[str, str], list[str]] = defaultdict(list)
-    for r in read_jsonl(config.RECORDS_FILE):
-        if r["source"] != "info_pages" and r.get("date"):
-            span.append(r["date"])
-        if r["source"] in STORE_SOURCES and r.get("app") and r.get("date"):
-            per_app[(r["app"], r["source"])].append(r["date"])
-    apps = sorted((AppRow(app, src, len(d), min(d), max(d)) for (app, src), d in per_app.items()),
-                  key=lambda a: (a.source, -a.reviews))
+    """From the local phase 1-4 reports when they exist (a machine that ran the pipeline), else
+    from the committed copy Data/site/pipeline.json (a deployment that has only the repository)."""
+    summary, missing = pipeline.summarize()
+    if summary is None:
+        summary = _json(config.PIPELINE_SUMMARY_FILE)
+    if summary is None:
+        return SiteData(ready=False, missing=missing)
+    apps = [AppRow(a["app"], a["source"], a["reviews"], a["first"], a["last"]) for a in summary.get("apps", [])]
 
     # sources: URLs listed, records and excerpts, and why a listed source has no records
     try:
         listed = yaml.safe_load(config.SOURCES_FILE.read_text(encoding="utf-8")) or {}
     except OSError:
         listed = {}
-    by_source = load["records"]["by_source"]
-    per_source = chunk.get("per_source", {})
+    by_source = summary["records_by_source"]
+    per_source = summary.get("excerpts_by_source", {})
     rows = []
     for key in dict.fromkeys([*listed, *by_source]):
         entries = listed.get(key) or []
@@ -247,27 +235,26 @@ def load_site_data() -> SiteData:
                               per_source.get(key, {}).get("excerpts", 0),
                               per_source.get(key, {}).get("records_split", 0), note))
 
-    checks = [Check("Phase 2 · Chunking", CHECK_NAMES.get(k, k), v, v == 0) for k, v in chunk["checks"].items()]
-    checks += [Check("Phase 3 · Embedding", CHECK_NAMES.get(k, k), v, v == 0) for k, v in embed["checks"].items()]
-    checks += [Check("Phase 4 · Vector store", CHECK_NAMES.get(k, k), v, v == 0) for k, v in store["checks"].items()]
+    checks = [Check(phase, CHECK_NAMES.get(k, k), v, v == 0)
+              for phase, values in summary.get("checks", {}).items() for k, v in values.items()]
 
     info = by_source.get("info_pages", 0)
     return SiteData(
         ready=True,
         pages=load_pages(),
-        records_total=load["records"]["total"],
-        investor_records=load["records"]["total"] - info,
+        records_total=summary["records_total"],
+        investor_records=summary["records_total"] - info,
         info_records=info,
-        excerpts_total=chunk["excerpts"],
-        distinct_texts=embed["distinct_excerpt_texts"],
-        vector_rows=store["excerpts"]["rows"],
-        first_date=min(span) if span else None,
-        last_date=max(span) if span else None,
-        last_updated=store.get("build_info", {}).get("last_updated_from_sources"),
-        model=chunk.get("model", ""),
-        dim=embed.get("dim", 0),
-        chunk_settings=chunk.get("settings", {}),
-        pii_replacements=load.get("pii_replacements", {}),
+        excerpts_total=summary["excerpts_total"],
+        distinct_texts=summary["distinct_texts"],
+        vector_rows=summary["vector_rows"],
+        first_date=summary.get("first_date"),
+        last_date=summary.get("last_date"),
+        last_updated=summary.get("last_updated"),
+        model=summary.get("model", ""),
+        dim=summary.get("dim", 0),
+        chunk_settings=summary.get("chunk_settings", {}),
+        pii_replacements=summary.get("pii_replacements", {}),
         sources=rows,
         apps=apps,
         checks=checks,

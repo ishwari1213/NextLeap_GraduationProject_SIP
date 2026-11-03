@@ -62,6 +62,8 @@ def _status_line(status: dict | None) -> None:
         st.caption(f"✅ Connected to the retrieval API at {config.API_BASE_URL}: {status.get('excerpts', 0):,} excerpts, "
                    f"{status.get('sections', 0)} page sections, last updated from sources "
                    f"{status.get('last_updated_from_sources') or 'unknown'}.")
+    elif not client.local_store_ready():
+        st.warning(client.UNAVAILABLE, icon="⚠️")
     else:
         st.warning("The retrieval API on port 8001 is not running, so questions are answered in-process (the first "
                    "one loads the search model, about 10 seconds). To start it, run from the Code folder: "
@@ -70,7 +72,7 @@ def _status_line(status: dict | None) -> None:
 
 def _result(result: dict, how: str, seconds: float) -> None:
     status = result.get("status")
-    if status == "invalid":
+    if status in ("invalid", "unavailable"):
         st.warning(result.get("detail", ""))
         return
     label, kind = client.BADGES.get(status, (status, "muted"))

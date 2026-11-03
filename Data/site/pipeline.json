@@ -1,0 +1,212 @@
+{
+  "generated_at": "2026-11-03T10:51:37+00:00",
+  "records_total": 18515,
+  "records_by_source": {
+    "play_store": 14485,
+    "app_store": 45,
+    "forums": 3242,
+    "reddit": 720,
+    "team_bhp": 15,
+    "info_pages": 8
+  },
+  "pii_replacements": {
+    "USER": 1063,
+    "ACCOUNT": 120,
+    "EMAIL": 10,
+    "PROFILE_LINK": 10,
+    "AADHAAR": 1,
+    "PHONE": 1
+  },
+  "excerpts_total": 19798,
+  "excerpts_by_source": {
+    "app_store": {
+      "records": 45,
+      "excerpts": 55,
+      "records_split": 9,
+      "max_tokens": 220,
+      "mean_tokens": 127.5
+    },
+    "forums": {
+      "records": 3242,
+      "excerpts": 4339,
+      "records_split": 169,
+      "max_tokens": 254,
+      "mean_tokens": 89.0
+    },
+    "info_pages": {
+      "records": 8,
+      "excerpts": 102,
+      "records_split": 8,
+      "max_tokens": 200,
+      "mean_tokens": 182.6
+    },
+    "play_store": {
+      "records": 14485,
+      "excerpts": 14491,
+      "records_split": 3,
+      "max_tokens": 248,
+      "mean_tokens": 35.3
+    },
+    "reddit": {
+      "records": 720,
+      "excerpts": 794,
+      "records_split": 24,
+      "max_tokens": 252,
+      "mean_tokens": 63.6
+    },
+    "team_bhp": {
+      "records": 15,
+      "excerpts": 17,
+      "records_split": 1,
+      "max_tokens": 205,
+      "mean_tokens": 105.4
+    }
+  },
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "chunk_settings": {
+    "model_max_tokens": 256,
+    "target_tokens": 200,
+    "overlap_tokens": 40
+  },
+  "distinct_texts": 19030,
+  "dim": 384,
+  "vector_rows": 19798,
+  "last_updated": "2026-11-01",
+  "first_date": "2016-05-26",
+  "last_date": "2026-10-31",
+  "apps": [
+    {
+      "app": "Groww",
+      "source": "app_store",
+      "reviews": 10,
+      "first": "2020-04-14",
+      "last": "2026-10-12"
+    },
+    {
+      "app": "Kotak MF",
+      "source": "app_store",
+      "reviews": 10,
+      "first": "2020-04-23",
+      "last": "2026-07-13"
+    },
+    {
+      "app": "ICICI Pru MF",
+      "source": "app_store",
+      "reviews": 10,
+      "first": "2020-12-04",
+      "last": "2026-07-05"
+    },
+    {
+      "app": "Zerodha Kite",
+      "source": "app_store",
+      "reviews": 10,
+      "first": "2024-02-21",
+      "last": "2026-10-30"
+    },
+    {
+      "app": "Sundaram MF",
+      "source": "app_store",
+      "reviews": 5,
+      "first": "2025-05-29",
+      "last": "2026-03-31"
+    },
+    {
+      "app": "Groww",
+      "source": "play_store",
+      "reviews": 7331,
+      "first": "2018-09-20",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "Zerodha Coin",
+      "source": "play_store",
+      "reviews": 922,
+      "first": "2024-10-10",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "Kotak MF",
+      "source": "play_store",
+      "reviews": 919,
+      "first": "2023-12-28",
+      "last": "2026-10-30"
+    },
+    {
+      "app": "Zerodha Kite",
+      "source": "play_store",
+      "reviews": 871,
+      "first": "2026-09-02",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "ET Money",
+      "source": "play_store",
+      "reviews": 849,
+      "first": "2025-11-11",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "ICICI Pru MF",
+      "source": "play_store",
+      "reviews": 837,
+      "first": "2024-12-21",
+      "last": "2026-10-30"
+    },
+    {
+      "app": "Upstox",
+      "source": "play_store",
+      "reviews": 772,
+      "first": "2026-09-11",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "INDmoney",
+      "source": "play_store",
+      "reviews": 736,
+      "first": "2026-08-07",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "Paytm Money",
+      "source": "play_store",
+      "reviews": 627,
+      "first": "2026-08-08",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "Angel One",
+      "source": "play_store",
+      "reviews": 571,
+      "first": "2026-10-17",
+      "last": "2026-10-31"
+    },
+    {
+      "app": "Sundaram MF",
+      "source": "play_store",
+      "reviews": 50,
+      "first": "2025-05-06",
+      "last": "2026-10-30"
+    }
+  ],
+  "checks": {
+    "Phase 2 · Chunking": {
+      "over_limit": 0,
+      "orphan_excerpts": 0,
+      "records_without_excerpts": 0,
+      "duplicate_chunk_ids": 0
+    },
+    "Phase 3 · Embedding": {
+      "excerpts_without_vector": 0,
+      "wrong_dimension": 0,
+      "not_unit_length": 0,
+      "non_finite": 0
+    },
+    "Phase 4 · Vector store": {
+      "excerpt_count_mismatch": 0,
+      "section_count_mismatch": 0,
+      "not_cosine": 0,
+      "sample_not_found": 0,
+      "sample_missing_metadata": 0
+    }
+  }
+}

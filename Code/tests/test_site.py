@@ -21,6 +21,7 @@ def reports(tmp_path, monkeypatch):
         "LOAD_REPORT_FILE": tmp_path / "load_report.json", "RECORDS_FILE": tmp_path / "records.jsonl",
         "CHUNK_REPORT_FILE": tmp_path / "chunk_report.json", "EMBEDDING_REPORT_FILE": tmp_path / "embed.json",
         "VECTOR_STORE_REPORT_FILE": tmp_path / "store.json", "SOURCES_FILE": tmp_path / "sources.yaml",
+        "SITE_DIR": tmp_path / "site", "PIPELINE_SUMMARY_FILE": tmp_path / "site" / "pipeline.json",
     }
     for name, value in paths.items():
         monkeypatch.setattr(config, name, value)
@@ -63,6 +64,32 @@ def test_site_data_reports_missing_inputs(reports):
     reports["CHUNK_REPORT_FILE"].unlink()
     site = site_data.load_site_data()
     assert not site.ready and site.missing == ["phase 2 chunk report"]
+
+
+def test_deployment_without_phase_outputs_reads_the_committed_summary(reports):
+    """Render has the repository only: the reports and records are git-ignored, pipeline.json is not."""
+    from src.site_export import pipeline
+    local = site_data.load_site_data()
+    assert pipeline.write() is not None and reports["PIPELINE_SUMMARY_FILE"].exists()
+    for name in ("LOAD_REPORT_FILE", "RECORDS_FILE", "CHUNK_REPORT_FILE", "EMBEDDING_REPORT_FILE",
+                 "VECTOR_STORE_REPORT_FILE"):
+        reports[name].unlink()
+    deployed = site_data.load_site_data()
+    assert deployed.ready
+    assert deployed.sources == local.sources and deployed.apps == local.apps and deployed.checks == local.checks
+    assert (deployed.records_total, deployed.excerpts_total, deployed.distinct_texts, deployed.vector_rows) == (4, 5, 4, 5)
+    assert (deployed.first_date, deployed.last_date, deployed.last_updated) == ("2024-01-01", "2026-10-31", "2026-11-01")
+
+
+def test_summary_file_matches_the_local_reports():
+    """The committed Data/site/pipeline.json must not lag behind the local pipeline outputs."""
+    from src.site_export import pipeline
+    summary, missing = pipeline.summarize()
+    if summary is None:
+        pytest.skip("pipeline outputs not built: " + ", ".join(missing))
+    committed = json.loads(config.PIPELINE_SUMMARY_FILE.read_text(encoding="utf-8"))
+    summary.pop("generated_at"), committed.pop("generated_at")
+    assert committed == summary, "rerun: python -m src.site_export.pipeline"
 
 
 def test_month_and_day_labels():

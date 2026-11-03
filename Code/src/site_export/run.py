@@ -4,8 +4,8 @@ Run from the Code/ folder (after tagging):
     python -m src.site_export.run
 
 Writes Data/site/overview.json, journey.json, dropoffs.json, segments.json, validation.json,
-method.json and sections_index.json. Rerun phases 3 and 4 afterwards so the sections are
-embedded and stored for routing.
+method.json, sections_index.json and pipeline.json (the phase 1-4 counts). Rerun phases 3 and 4
+afterwards so the sections are embedded and stored for routing.
 """
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ import sys
 from src import config
 from src.jsonl import read_jsonl
 from src.phase1_data_loading.loaders.common import now_iso
+from src.site_export import pipeline
 from src.site_export.build import build
 
 log = logging.getLogger("site_export")
@@ -57,6 +58,7 @@ def main(argv: list[str] | None = None) -> int:
     config.SITE_DIR.mkdir(parents=True, exist_ok=True)
     for name, data in pages.items():
         (config.SITE_DIR / f"{name}.json").write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+    pipeline.write()  # phase 1-4 counts, so a deployment without the phase outputs can show them
 
     o = pages["overview"]
     print("\nSite export summary")

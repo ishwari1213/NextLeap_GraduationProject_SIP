@@ -76,6 +76,7 @@ CHUNK_OVERLAP_TOKENS = 40         # text repeated from the end of one excerpt at
 
 # --- Phase 3: embedding --------------------------------------------------------------------
 SECTIONS_INDEX_FILE = SITE_DIR / "sections_index.json"      # written by the FR-7 export
+PIPELINE_SUMMARY_FILE = SITE_DIR / "pipeline.json"          # phase 1-4 counts for the site (committed)
 EMBEDDING_VECTORS_FILE = EMBEDDINGS_DIR / "vectors.npy"      # one row per distinct text
 EMBEDDING_KEYS_FILE = EMBEDDINGS_DIR / "keys.json"           # model, dim and the text hash of each row
 EMBEDDED_SECTIONS_FILE = EMBEDDINGS_DIR / "sections.json"    # section id -> text hash, for phase 4
@@ -103,7 +104,9 @@ SECTION_TAG_BOOST = 0.05          # added to a candidate's rank when it carries 
 QUERY_SECTION_BLEND = 1.0         # search vector = question + this x the routed section's `about` vector
                                   # (phase 6 compared 0, 0.5 and 1.0; see Docs/architecture.md)
 QUESTION_MAX_CHARS = 500
-API_BASE_URL = "http://127.0.0.1:8001"  # the retrieval API the site calls (port 8000 is another app)
+# The retrieval API the site calls (port 8000 is another app). A deployment can point the site
+# at an API hosted elsewhere by setting API_BASE_URL in its environment.
+API_BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8001").rstrip("/")
 
 # --- Mistral (tagging and answers) ---------------------------------------------------------
 MISTRAL_REQUESTS_PER_MINUTE = 28  # this key allows 30/minute; stay just under

@@ -93,3 +93,31 @@ def test_short_question_is_rejected(app):
     app.text_area[0].input("hi")
     at = next(b for b in app.button if b.label == "Ask").click().run()
     assert at.warning and "at least 3 characters" in at.warning[0].value
+
+
+def test_without_api_or_vector_store_the_client_says_unavailable(monkeypatch, tmp_path):
+    """A deployment built from the repository has no vector store (it is git-ignored) and no API."""
+    import importlib
+    import sys
+    import requests
+    sys.path[:0] = [str(APP_DIR.parent), str(APP_DIR)]
+    import research_client
+    research_client = importlib.reload(research_client)  # the page tests above stub its functions in-process
+    from src import config
+
+    def refuse(*args, **kwargs):
+        raise requests.ConnectionError("no API")
+    monkeypatch.setattr(research_client.requests, "post", refuse)
+    monkeypatch.setattr(config, "VECTOR_DB_DIR", tmp_path / "chroma")
+    result, how = research_client.query("Why do SIP instalments fail?")
+    assert result == {"status": "unavailable", "detail": research_client.UNAVAILABLE} and how == ""
+
+
+def test_page_warns_up_front_when_questions_cannot_be_answered():
+    from streamlit.testing.v1 import AppTest
+    script = SCRIPT.replace(
+        'research_client.api_status = lambda: {{"excerpts": 19798, "sections": 13, "last_updated_from_sources": "2026-11-01"}}',
+        "research_client.api_status = lambda: None\nresearch_client.local_store_ready = lambda: False")
+    at = AppTest.from_string(script.format(code=str(APP_DIR.parent), app=str(APP_DIR)), default_timeout=60).run()
+    assert not at.exception
+    assert any("not part of this deployment" in w.value for w in at.warning)

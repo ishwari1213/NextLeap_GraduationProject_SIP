@@ -74,7 +74,7 @@ NextLeap_GraduationProject_SIP/
 │   │   ├── chroma/                    phase 4 output: ChromaDB files (collections: excerpts, sections)
 │   │   └── vector_store_report.json
 │   ├── tags/                          FR-5 output: tags.jsonl (one row per record), tag_report.json
-│   ├── site/                          FR-7 output: one JSON per page + sections_index.json (routing)
+│   ├── site/                          FR-7 output: one JSON per page + sections_index.json (routing) + pipeline.json (phase 1-4 counts)
 │   └── eval/
 │       ├── golden_set.jsonl           phase 6 input: the 20 test questions
 │       └── reports/                   phase 6 output: one report per run
@@ -96,7 +96,7 @@ NextLeap_GraduationProject_SIP/
     │   ├── phase5_retrieval/          scope.py, router.py, search.py, bundle.py, retriever.py, cli.py
     │   ├── phase6_retrieval_testing/  evaluate.py, run.py, agreement.py (engine vs human labels)
     │   ├── tagging/                   FR-5: taxonomy.py, tagger.py, run.py (Mistral)
-    │   ├── site_export/               FR-6 scoring.py + FR-7 build.py, run.py (page data, sections)
+    │   ├── site_export/               FR-6 scoring.py + FR-7 build.py, run.py (page data, sections), pipeline.py (pipeline.json)
     │   ├── answer/                    generate.py: the answer step and its guardrail (FR-9 to FR-14)
     │   ├── llm.py                     shared Mistral client (rate limit, retries)
     │   └── api/                       main.py: FastAPI /api/retrieve (later /api/ask), calls phase5_retrieval
@@ -316,11 +316,11 @@ Run every command from the `Code/` folder.
 | 3 | `python -m src.phase3_embedding.run` | `Data/chunks/`, `Data/site/` | `Data/embeddings/` |
 | 4 | `python -m src.phase4_vector_store.run` | `Data/embeddings/`, `Data/chunks/` | `Data/vector_db/chroma/` |
 | Tag (FR-5) | `python -m src.tagging.run` | `Data/cleaned/records.jsonl` | `Data/tags/` |
-| Score + export (FR-6, FR-7) | `python -m src.site_export.run` | records, tags, phase reports | `Data/site/*.json`, `sections_index.json` |
+| Score + export (FR-6, FR-7) | `python -m src.site_export.run` | records, tags, phase reports | `Data/site/*.json`, `sections_index.json`, `pipeline.json` |
 | 3 + 4 again | rerun phases 3 and 4 after an export | `Data/site/sections_index.json`, tags | section vectors; tags in store metadata |
 | 5 | `uvicorn src.api.main:app --port 8001`, or `python -m src.phase5_retrieval.cli "question"` | `Data/vector_db/`, `Data/site/` | Serves `/api/retrieve` and `/api/ask` |
 | 6 | `python -m src.phase6_retrieval_testing.run` and `pytest tests/` | `Data/eval/golden_set.jsonl`, `holdout_set.jsonl` | `Data/eval/reports/` |
-| Site | `streamlit run app/streamlit_app.py` (port 8502) | `Data/site/*.json`, phase reports, `/api/ask` | Six pages + "Ask the engine" |
+| Site | `streamlit run app/streamlit_app.py` (port 8502) | `Data/site/*.json`, phase reports (or `Data/site/pipeline.json`), `/api/ask` | Six pages + "Ask the engine" |
 
 A full refresh is phases 1 → 2 → 3 → 4 → tag → export → 3 → 4 → 6, then restart the API and the site. Every step only processes what changed.
 
@@ -346,7 +346,9 @@ A full refresh is phases 1 → 2 → 3 → 4 → tag → export → 3 → 4 → 
 
 **Frontend retrieval** (`app/research_client.py`, `app/views/research.py`, URL `/ask`, last tab "Ask the engine"). The full-page research tool sends a question, with optional app and source filters, to `POST /api/ask` ("Answer and evidence") or `POST /api/retrieve` ("Evidence only", no Mistral call); if the API is not running it runs the same retrieval and answer code in-process and says so. It shows the API connection status, the 4 sample questions until a question is asked, then the status badge, supporting posts, routed section, timing, the answer with confidence and quotes, the two follow-ups, every retrieved excerpt with its match score (at most 25 words, source and month), the information-page context and the evidence bundle (excerpts trimmed, record ids and URLs left out), plus recent questions. The sidebar tool on the other pages uses the same client and links to this page.
 
-**The site** reads `Data/site/*.json` (tag-based pages) and the phase reports (pipeline checks), so no number is typed in. "Ask the engine" calls `/api/ask` (or runs retrieval and the answer step in-process if the API is down) and shows the answer, confidence, quotes, the page link and the two follow-ups ("Show quotes", "Break down by segment"). Survey findings stay "Not yet computed": the survey data is not in this project.
+**The site** reads `Data/site/*.json` (tag-based pages and survey sections) and the phase reports (pipeline counts and checks), so no number is typed in. "Ask the engine" calls `/api/ask` (or runs retrieval and the answer step in-process if the API is down) and shows the answer, confidence, quotes, the page link and the two follow-ups ("Show quotes", "Break down by segment").
+
+**Deployment (for example Render).** The phase outputs (`Data/cleaned/`, `Data/chunks/`, `Data/embeddings/`, `Data/vector_db/`) are git-ignored: they are large (the vector store alone is about 125 MB) and rebuilt locally. A deployment built from the repository therefore has only `Data/site/`, `Data/tags/`, `Data/survey/`, `Data/eval/` and `Data/sources/`. So that the pages still show every number, the export also writes `Data/site/pipeline.json` (`Code/src/site_export/pipeline.py`): the counts, date ranges, per-app review windows and check results the site would otherwise compute from the phase reports and `records.jsonl`. The site computes them live when the reports exist and reads `pipeline.json` when they do not; a test fails if the committed file lags behind the local reports (rerun `python -m src.site_export.pipeline`). "Ask the engine" needs the vector store, so on such a deployment it says the evidence store is not part of the deployment instead of answering. To make it answer there, host the phase 5 API somewhere with the vector store and set `API_BASE_URL` in the deployment's environment (and `MISTRAL_API_KEY` wherever the API runs).
 
 ## 6. Key design decisions
 
