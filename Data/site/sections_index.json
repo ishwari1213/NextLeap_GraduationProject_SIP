@@ -1,0 +1,177 @@
+[
+  {
+    "page": "Overview",
+    "section_id": "opportunities",
+    "title": "Opportunities",
+    "text": "Which opportunity should we solve first, and why? What unmet needs emerge consistently across conversations? Ranked SIP problems and opportunity scores.",
+    "about": "My SIP instalment or autopay failed, money was debited but the SIP was not processed, I cannot pause or change my SIP amount, the returns are confusing, losses worry me.",
+    "key_numbers": {
+      "Reliable instalments: opportunity score (0-100)": 74,
+      "Reliable instalments: problem posts": 476,
+      "Flexible SIP controls: opportunity score (0-100)": 41,
+      "Flexible SIP controls: problem posts": 65,
+      "Clear returns and progress: opportunity score (0-100)": 29,
+      "Clear returns and progress: problem posts": 12,
+      "Confidence through early losses: opportunity score (0-100)": 1,
+      "Confidence through early losses: problem posts": 5,
+      "Easy return after a pause: problem posts": 0
+    }
+  },
+  {
+    "page": "Journey",
+    "section_id": "expectations",
+    "title": "Why people start and what they expect",
+    "text": "Why do people start a SIP, and what do they expect to happen? Goals, motivation and expectations.",
+    "about": "I started a SIP for long-term wealth, retirement, a goal, a saving habit or tax saving, and I expect it to grow steadily over the years.",
+    "key_numbers": {
+      "Long term growth: posts": 249,
+      "Habit: posts": 26,
+      "Tax benefit: posts": 8,
+      "Quick gains: posts": 5,
+      "Steady returns: posts": 5
+    }
+  },
+  {
+    "page": "Journey",
+    "section_id": "stages",
+    "title": "What changes after starting",
+    "text": "What changes in investor behaviour in the months after starting a SIP? Onboarding, first instalment, months 2 to 6, months 7 to 12, after the first year.",
+    "about": "I just set up my SIP mandate; my first instalment went through; a few months into my SIP; I have been doing SIPs for years.",
+    "key_numbers": {
+      "After year 1: posts": 411,
+      "Onboarding: posts": 143,
+      "Before starting: posts": 131,
+      "Months 2–6: posts": 129,
+      "First instalment: posts": 84,
+      "Months 7–12: posts": 49
+    }
+  },
+  {
+    "page": "Journey",
+    "section_id": "checking",
+    "title": "What investors check and how often",
+    "text": "What do investors check, and how often, once they have started a SIP? Checking frequency.",
+    "about": "I check my SIP portfolio every day, every week, once a month on the debit day, or rarely.",
+    "key_numbers": {
+      "Monthly: posts": 367,
+      "Rarely: posts": 43,
+      "Daily: posts": 26,
+      "Weekly: posts": 7
+    }
+  },
+  {
+    "page": "Journey",
+    "section_id": "confusion",
+    "title": "In-app confusion",
+    "text": "What confuses or worries investors inside the app? Returns, payment status, NAV, units, SIP dates.",
+    "about": "I don't understand the returns or P&L shown in the app, whether my instalment went through, which NAV I got or how many units were allotted.",
+    "key_numbers": {
+      "Payment status: posts": 267,
+      "Returns or P&L: posts": 148,
+      "NAV or units: posts": 132,
+      "SIP dates: posts": 76,
+      "Charges: posts": 59,
+      "Fund details: posts": 50
+    }
+  },
+  {
+    "page": "Journey",
+    "section_id": "outside-the-app",
+    "title": "Outside the app",
+    "text": "What do investors do outside the app when they feel unsure? Where do they go for help: forums, support, YouTube, friends, advisors.",
+    "about": "I asked on a forum or Reddit, contacted customer support, checked the AMC website, watched YouTube, or asked friends, family or an advisor.",
+    "key_numbers": {
+      "Forum or community: posts": 577,
+      "Contacts support: posts": 189,
+      "Other apps or AMC: posts": 15,
+      "Friends or family: posts": 5,
+      "YouTube: posts": 2,
+      "Advisor: posts": 2
+    }
+  },
+  {
+    "page": "Drop-offs",
+    "section_id": "failure-modes",
+    "title": "Failure modes",
+    "text": "What leads investors to pause, reduce or stop a SIP? Which problems make SIPs fail: failed instalments, autopay and mandate failures, money debited twice, cannot pause or change the amount, confusing returns.",
+    "about": "My SIP instalment failed, the autopay mandate was rejected, money was debited twice, I could not pause or modify my SIP.",
+    "key_numbers": {
+      "Instalment failed: posts": 451,
+      "App bug: posts": 152,
+      "Withdrawal problem: posts": 144,
+      "Cannot pause or change amount: posts": 62,
+      "Support not resolving: posts": 45,
+      "Debited after cancel or twice: posts": 25,
+      "Confusing returns or progress: posts": 12,
+      "Losses shake confidence: posts": 5
+    }
+  },
+  {
+    "page": "Drop-offs",
+    "section_id": "triggers",
+    "title": "Triggers",
+    "text": "Market or not: do market falls and losses make investors stop their SIPs, or other triggers such as switching platform, charges, a cash-flow shock or app bugs?",
+    "about": "I stopped my SIP because the market fell and I saw losses, I switched to another platform or a direct plan, the charges, or I lost my job.",
+    "key_numbers": {
+      "App bug: posts": 409,
+      "Rule change: posts": 256,
+      "Habit discipline: posts": 64,
+      "Switching platform or plan: posts": 50,
+      "Charges or tax: posts": 37,
+      "Fund issue: posts": 23,
+      "Goal or wealth: posts": 18,
+      "Cash flow or life event: posts": 17
+    }
+  },
+  {
+    "page": "Drop-offs",
+    "section_id": "continuers",
+    "title": "Continuers vs drop-offs",
+    "text": "What separates investors who continue from those who quietly drop off?",
+    "about": "I kept my SIP going despite the problems, while others stopped, paused or are thinking of stopping their SIP.",
+    "key_numbers": {
+      "continued: posts": 296,
+      "dropped: posts": 698
+    }
+  },
+  {
+    "page": "Segments",
+    "section_id": "segments",
+    "title": "Patterns by segment",
+    "text": "How do patterns differ across user segments: income stability, age, source of money, who influenced them, residency, NRI, students, salaried?",
+    "about": "I am a student, salaried, self-employed, an NRI, in my twenties; I started after watching YouTube or on a friend's advice.",
+    "key_numbers": {
+      "posts stating a segment: posts": 317
+    }
+  },
+  {
+    "page": "Segments",
+    "section_id": "first-time",
+    "title": "First-time investors",
+    "text": "What is specific to first-time investors? How do first-time investors differ from experienced ones?",
+    "about": "I am a first-time investor, new to mutual funds, I just started my first SIP; I have been investing for many years.",
+    "key_numbers": {
+      "first-time posts: posts": 97
+    }
+  },
+  {
+    "page": "Validation",
+    "section_id": "quality",
+    "title": "How quality was checked",
+    "text": "How was the quality of the insights validated? Where did the engine fail?",
+    "about": "",
+    "key_numbers": {}
+  },
+  {
+    "page": "Method",
+    "section_id": "pipeline",
+    "title": "How it was built",
+    "text": "How was the engine built? How does it gather and analyse data, identify themes and generate insights?",
+    "about": "",
+    "key_numbers": {
+      "posts: posts": 18507,
+      "sip_posts: posts": 2324,
+      "problem_posts: posts": 899
+    }
+  }
+]

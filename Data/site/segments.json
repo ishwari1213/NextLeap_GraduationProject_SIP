@@ -1,0 +1,427 @@
+{
+  "generated_at": "2026-11-02T14:42:55+00:00",
+  "last_updated": "2026-11-01",
+  "tiles": {
+    "stated": {
+      "status": "computed",
+      "n": 317,
+      "base": 2324,
+      "share": 0.136,
+      "sample": "ok"
+    },
+    "first_time": {
+      "status": "computed",
+      "n": 97,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    "first_time_problem": {
+      "status": "computed",
+      "n": 36,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    }
+  },
+  "table": {
+    "status": "computed",
+    "rows": [
+      {
+        "segment": "Experience",
+        "group": "Experienced",
+        "n": 160,
+        "sample": "ok",
+        "with_problem": 74,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Experience",
+        "group": "First time",
+        "n": 97,
+        "sample": "ok",
+        "with_problem": 36,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Income",
+        "group": "Salaried",
+        "n": 126,
+        "sample": "ok",
+        "with_problem": 67,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Income",
+        "group": "Student",
+        "n": 10,
+        "sample": "ok",
+        "with_problem": 2,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Losses shake confidence"
+        ]
+      },
+      {
+        "segment": "Income",
+        "group": "Self employed",
+        "n": 2,
+        "sample": "low",
+        "with_problem": 1,
+        "top_failure_modes": [
+          "Support not resolving"
+        ]
+      },
+      {
+        "segment": "Age",
+        "group": "25 to 44",
+        "n": 88,
+        "sample": "ok",
+        "with_problem": 45,
+        "top_failure_modes": [
+          "Instalment failed",
+          "App bug"
+        ]
+      },
+      {
+        "segment": "Age",
+        "group": "Under 25",
+        "n": 18,
+        "sample": "ok",
+        "with_problem": 3,
+        "top_failure_modes": [
+          "Withdrawal problem",
+          "Instalment failed"
+        ]
+      },
+      {
+        "segment": "Age",
+        "group": "45 or older",
+        "n": 2,
+        "sample": "low",
+        "with_problem": 0,
+        "top_failure_modes": []
+      },
+      {
+        "segment": "Source of money",
+        "group": "Salary",
+        "n": 99,
+        "sample": "ok",
+        "with_problem": 47,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Source of money",
+        "group": "Savings or bonus",
+        "n": 20,
+        "sample": "ok",
+        "with_problem": 9,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Influence",
+        "group": "Own research",
+        "n": 95,
+        "sample": "ok",
+        "with_problem": 24,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Influence",
+        "group": "Friends or family",
+        "n": 3,
+        "sample": "low",
+        "with_problem": 0,
+        "top_failure_modes": []
+      },
+      {
+        "segment": "Influence",
+        "group": "YouTube or finfluencer",
+        "n": 1,
+        "sample": "low",
+        "with_problem": 0,
+        "top_failure_modes": []
+      },
+      {
+        "segment": "Influence",
+        "group": "Advisor",
+        "n": 1,
+        "sample": "low",
+        "with_problem": 0,
+        "top_failure_modes": []
+      },
+      {
+        "segment": "Residency",
+        "group": "Resident",
+        "n": 65,
+        "sample": "ok",
+        "with_problem": 27,
+        "top_failure_modes": [
+          "Instalment failed",
+          "Withdrawal problem"
+        ]
+      },
+      {
+        "segment": "Residency",
+        "group": "NRI",
+        "n": 11,
+        "sample": "ok",
+        "with_problem": 2,
+        "top_failure_modes": [
+          "Support not resolving"
+        ]
+      }
+    ]
+  },
+  "first_time": {
+    "status": "computed",
+    "n": 97,
+    "base": null,
+    "share": null,
+    "sample": "ok",
+    "no_problem": 61,
+    "failure_modes": [
+      {
+        "key": "instalment_failed",
+        "label": "Instalment failed",
+        "n": 23,
+        "sample": "ok"
+      },
+      {
+        "key": "withdrawal_problem",
+        "label": "Withdrawal problem",
+        "n": 7,
+        "sample": "low"
+      },
+      {
+        "key": "app_bug",
+        "label": "App bug",
+        "n": 4,
+        "sample": "low"
+      }
+    ],
+    "expectations": [
+      {
+        "key": "long_term_growth",
+        "label": "Long term growth",
+        "n": 48,
+        "sample": "ok"
+      },
+      {
+        "key": "habit",
+        "label": "Habit",
+        "n": 1,
+        "sample": "low"
+      },
+      {
+        "key": "quick_gains",
+        "label": "Quick gains",
+        "n": 1,
+        "sample": "low"
+      }
+    ]
+  },
+  "survey": {
+    "status": "computed",
+    "sample": {
+      "n": 21,
+      "responses": 23,
+      "top_age": "26-30",
+      "top_occupation": "Salaried Employee",
+      "under_a_year": 3,
+      "note": "Survey of 21 SIP investors (23 responses), mostly aged 26-30 and salaried; 3 are under a year into their SIP. A small convenience sample: figures are 'n of 21', not population percentages."
+    },
+    "patterns": [
+      {
+        "name": "The Watcher",
+        "definition": "checks weekly or more often",
+        "n": 12,
+        "detail": "8 have considered stopping"
+      },
+      {
+        "name": "The Quiet Checker",
+        "definition": "checks monthly, rarely or on debit day",
+        "n": 9,
+        "detail": "4 have considered stopping; 3 say they paused or reduced"
+      },
+      {
+        "name": "The Cash-Squeezed",
+        "definition": "considered stopping over job loss, an emergency or family costs",
+        "n": 7,
+        "detail": "5 still active; 6 rate continuing 4 or 5 of 5"
+      }
+    ],
+    "profile": {
+      "Age now": [
+        {
+          "key": "26-30",
+          "label": "26-30",
+          "n": 12,
+          "base": 21
+        },
+        {
+          "key": "22-25",
+          "label": "22-25",
+          "n": 5,
+          "base": 21
+        },
+        {
+          "key": "31-35",
+          "label": "31-35",
+          "n": 3,
+          "base": 21
+        },
+        {
+          "key": "36-45",
+          "label": "36-45",
+          "n": 1,
+          "base": 21
+        }
+      ],
+      "Age at first SIP": [
+        {
+          "key": "22-25",
+          "label": "22-25",
+          "n": 13,
+          "base": 21
+        },
+        {
+          "key": "26-30",
+          "label": "26-30",
+          "n": 7,
+          "base": 21
+        },
+        {
+          "key": "31-35",
+          "label": "31-35",
+          "n": 1,
+          "base": 21
+        }
+      ],
+      "Occupation": [
+        {
+          "key": "Salaried Employee",
+          "label": "Salaried Employee",
+          "n": 19,
+          "base": 21
+        },
+        {
+          "key": "Freelancer",
+          "label": "Freelancer",
+          "n": 1,
+          "base": 21
+        },
+        {
+          "key": "Student",
+          "label": "Student",
+          "n": 1,
+          "base": 21
+        }
+      ],
+      "Source of money": [
+        {
+          "key": "Salary",
+          "label": "Salary",
+          "n": 19,
+          "base": 21
+        },
+        {
+          "key": "Freelance Income",
+          "label": "Freelance Income",
+          "n": 1,
+          "base": 21
+        },
+        {
+          "key": "Parents / Allowance",
+          "label": "Parents / Allowance",
+          "n": 1,
+          "base": 21
+        }
+      ],
+      "Income regularity": [
+        {
+          "key": "Same amount every month",
+          "label": "Same amount every month",
+          "n": 19,
+          "base": 21
+        },
+        {
+          "key": "Regular but amount varied",
+          "label": "Regular but amount varied",
+          "n": 2,
+          "base": 21
+        }
+      ],
+      "Time investing": [
+        {
+          "key": "More than 3 Years",
+          "label": "More than 3 Years",
+          "n": 9,
+          "base": 21
+        },
+        {
+          "key": "1-2 Years",
+          "label": "1-2 Years",
+          "n": 5,
+          "base": 21
+        },
+        {
+          "key": "2-3 Years",
+          "label": "2-3 Years",
+          "n": 4,
+          "base": 21
+        },
+        {
+          "key": "6-12 Months",
+          "label": "6-12 Months",
+          "n": 3,
+          "base": 21
+        }
+      ],
+      "Platform": [
+        {
+          "key": "Groww",
+          "label": "Groww",
+          "n": 13,
+          "base": 21
+        },
+        {
+          "key": "Zerodha Coin",
+          "label": "Zerodha Coin",
+          "n": 4,
+          "base": 21
+        },
+        {
+          "key": "Upstox",
+          "label": "Upstox",
+          "n": 3,
+          "base": 21
+        },
+        {
+          "key": "Mint",
+          "label": "Mint",
+          "n": 1,
+          "base": 21
+        }
+      ]
+    }
+  }
+}

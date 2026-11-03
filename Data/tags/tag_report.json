@@ -1,0 +1,25 @@
+{
+  "run_at": "2026-11-01T17:23:05+00:00",
+  "model": "ministral-14b-latest",
+  "prompt_version": "v1",
+  "records": 18515,
+  "routes": {
+    "llm": 5704,
+    "rule": 12803,
+    "skip": 8
+  },
+  "tagged_total": 18507,
+  "tagged_by_model": 5704,
+  "about_sip_true": 2324,
+  "tagged_this_run": 191,
+  "still_untagged": 0,
+  "failed_batches": 0,
+  "unanswered_posts": 0,
+  "invalid_labels_dropped": 0,
+  "usage_this_run": {
+    "requests": 10,
+    "prompt_tokens": 27840,
+    "completion_tokens": 3787
+  },
+  "seconds": 26.6
+}

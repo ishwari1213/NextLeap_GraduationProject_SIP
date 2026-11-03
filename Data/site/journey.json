@@ -1,0 +1,496 @@
+{
+  "generated_at": "2026-11-02T14:42:55+00:00",
+  "last_updated": "2026-11-01",
+  "tiles": {
+    "long_term": {
+      "status": "computed",
+      "n": 249,
+      "base": 2324,
+      "share": 0.107,
+      "sample": "ok"
+    },
+    "quick_gains": {
+      "status": "computed",
+      "n": 5,
+      "base": null,
+      "share": null,
+      "sample": "low"
+    },
+    "checking_stated": {
+      "status": "computed",
+      "n": 443,
+      "base": 2324,
+      "share": 0.191,
+      "sample": "ok"
+    },
+    "top_confusion": {
+      "key": "payment_status",
+      "label": "Payment status",
+      "n": 267,
+      "sample": "ok"
+    },
+    "top_help": {
+      "key": "forum_or_community",
+      "label": "Forum or community",
+      "n": 577,
+      "sample": "ok"
+    }
+  },
+  "stages": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "after_year_1",
+        "label": "After year 1",
+        "n": 411,
+        "sample": "ok",
+        "with_problem": 194
+      },
+      {
+        "key": "onboarding",
+        "label": "Onboarding",
+        "n": 143,
+        "sample": "ok",
+        "with_problem": 65
+      },
+      {
+        "key": "before_starting",
+        "label": "Before starting",
+        "n": 131,
+        "sample": "ok",
+        "with_problem": 18
+      },
+      {
+        "key": "months_2_6",
+        "label": "Months 2–6",
+        "n": 129,
+        "sample": "ok",
+        "with_problem": 95
+      },
+      {
+        "key": "first_instalment",
+        "label": "First instalment",
+        "n": 84,
+        "sample": "ok",
+        "with_problem": 42
+      },
+      {
+        "key": "months_7_12",
+        "label": "Months 7–12",
+        "n": 49,
+        "sample": "ok",
+        "with_problem": 34
+      }
+    ],
+    "stated": 947,
+    "base": 2324
+  },
+  "expectations": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "long_term_growth",
+        "label": "Long term growth",
+        "n": 249,
+        "sample": "ok"
+      },
+      {
+        "key": "habit",
+        "label": "Habit",
+        "n": 26,
+        "sample": "ok"
+      },
+      {
+        "key": "tax_benefit",
+        "label": "Tax benefit",
+        "n": 8,
+        "sample": "low"
+      },
+      {
+        "key": "quick_gains",
+        "label": "Quick gains",
+        "n": 5,
+        "sample": "low"
+      },
+      {
+        "key": "steady_returns",
+        "label": "Steady returns",
+        "n": 5,
+        "sample": "low"
+      }
+    ],
+    "stated": 293,
+    "base": 2324
+  },
+  "checking": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "monthly",
+        "label": "Monthly",
+        "n": 367,
+        "sample": "ok"
+      },
+      {
+        "key": "rarely",
+        "label": "Rarely",
+        "n": 43,
+        "sample": "ok"
+      },
+      {
+        "key": "daily",
+        "label": "Daily",
+        "n": 26,
+        "sample": "ok"
+      },
+      {
+        "key": "weekly",
+        "label": "Weekly",
+        "n": 7,
+        "sample": "low"
+      }
+    ],
+    "stated": 443,
+    "base": 2324
+  },
+  "confusion": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "payment_status",
+        "label": "Payment status",
+        "n": 267,
+        "sample": "ok"
+      },
+      {
+        "key": "returns_or_pnl",
+        "label": "Returns or P&L",
+        "n": 148,
+        "sample": "ok"
+      },
+      {
+        "key": "nav_or_units",
+        "label": "NAV or units",
+        "n": 132,
+        "sample": "ok"
+      },
+      {
+        "key": "sip_dates",
+        "label": "SIP dates",
+        "n": 76,
+        "sample": "ok"
+      },
+      {
+        "key": "charges",
+        "label": "Charges",
+        "n": 59,
+        "sample": "ok"
+      },
+      {
+        "key": "fund_details",
+        "label": "Fund details",
+        "n": 50,
+        "sample": "ok"
+      }
+    ],
+    "stated": 732,
+    "base": 2324
+  },
+  "help_seeking": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "forum_or_community",
+        "label": "Forum or community",
+        "n": 577,
+        "sample": "ok"
+      },
+      {
+        "key": "contacts_support",
+        "label": "Contacts support",
+        "n": 189,
+        "sample": "ok"
+      },
+      {
+        "key": "other_apps_or_amc",
+        "label": "Other apps or AMC",
+        "n": 15,
+        "sample": "ok"
+      },
+      {
+        "key": "friends_or_family",
+        "label": "Friends or family",
+        "n": 5,
+        "sample": "low"
+      },
+      {
+        "key": "youtube",
+        "label": "YouTube",
+        "n": 2,
+        "sample": "low"
+      },
+      {
+        "key": "advisor",
+        "label": "Advisor",
+        "n": 2,
+        "sample": "low"
+      }
+    ],
+    "stated": 790,
+    "base": 2324
+  },
+  "survey": {
+    "status": "computed",
+    "sample": {
+      "n": 21,
+      "responses": 23,
+      "top_age": "26-30",
+      "top_occupation": "Salaried Employee",
+      "under_a_year": 3,
+      "note": "Survey of 21 SIP investors (23 responses), mostly aged 26-30 and salaried; 3 are under a year into their SIP. A small convenience sample: figures are 'n of 21', not population percentages."
+    },
+    "checking": [
+      {
+        "key": "Multiple Times Per Day",
+        "label": "Multiple Times Per Day",
+        "n": 1,
+        "base": 21
+      },
+      {
+        "key": "Daily",
+        "label": "Daily",
+        "n": 4,
+        "base": 21
+      },
+      {
+        "key": "Weekly",
+        "label": "Weekly",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Monthly",
+        "label": "Monthly",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "Only When SIP Gets Debited",
+        "label": "Only When SIP Gets Debited",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "Rarely",
+        "label": "Rarely",
+        "n": 3,
+        "base": 21
+      }
+    ],
+    "weekly_or_more": 12,
+    "first_look": [
+      {
+        "key": "Profit/Loss",
+        "label": "Profit/Loss",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Return %",
+        "label": "Return %",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Fund Performance",
+        "label": "Fund Performance",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "Goal Progress",
+        "label": "Goal Progress",
+        "n": 2,
+        "base": 21
+      },
+      {
+        "key": "Portfolio Value",
+        "label": "Portfolio Value",
+        "n": 2,
+        "base": 21
+      }
+    ],
+    "expectation": [
+      {
+        "key": "Long-term Wealth Growth",
+        "label": "Long-term Wealth Growth",
+        "n": 17,
+        "base": 21
+      },
+      {
+        "key": "Financial Discipline",
+        "label": "Financial Discipline",
+        "n": 2,
+        "base": 21
+      },
+      {
+        "key": "Achieving Financial Goals",
+        "label": "Achieving Financial Goals",
+        "n": 1,
+        "base": 21
+      },
+      {
+        "key": "Quick Returns",
+        "label": "Quick Returns",
+        "n": 1,
+        "base": 21
+      }
+    ],
+    "returns_horizon": [
+      {
+        "key": "After 5 Years",
+        "label": "After 5 Years",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Within 2-3 Years",
+        "label": "Within 2-3 Years",
+        "n": 5,
+        "base": 21
+      },
+      {
+        "key": "Didn't Think About It",
+        "label": "Didn't Think About It",
+        "n": 4,
+        "base": 21
+      },
+      {
+        "key": "Within 6 Months",
+        "label": "Within 6 Months",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "Within 1 Year",
+        "label": "Within 1 Year",
+        "n": 2,
+        "base": 21
+      }
+    ],
+    "influence": [
+      {
+        "key": "Friends",
+        "label": "Friends",
+        "n": 10,
+        "base": 21
+      },
+      {
+        "key": "Family",
+        "label": "Family",
+        "n": 8,
+        "base": 21
+      },
+      {
+        "key": "Self Research",
+        "label": "Self Research",
+        "n": 8,
+        "base": 21
+      },
+      {
+        "key": "YouTube / Finfluencers",
+        "label": "YouTube / Finfluencers",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Social Media",
+        "label": "Social Media",
+        "n": 4,
+        "base": 21
+      },
+      {
+        "key": "Financial Advisor",
+        "label": "Financial Advisor",
+        "n": 3,
+        "base": 21
+      }
+    ],
+    "help": [
+      {
+        "key": "Google Search",
+        "label": "Google Search",
+        "n": 12,
+        "base": 21
+      },
+      {
+        "key": "Friends / Family",
+        "label": "Friends / Family",
+        "n": 12,
+        "base": 21
+      },
+      {
+        "key": "YouTube",
+        "label": "YouTube",
+        "n": 9,
+        "base": 21
+      },
+      {
+        "key": "Financial Advisor",
+        "label": "Financial Advisor",
+        "n": 6,
+        "base": 21
+      },
+      {
+        "key": "Social Media",
+        "label": "Social Media",
+        "n": 4,
+        "base": 21
+      },
+      {
+        "key": "Investment App",
+        "label": "Investment App",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "I was certain till now",
+        "label": "I was certain till now",
+        "n": 1,
+        "base": 21
+      }
+    ],
+    "profile": [
+      {
+        "key": "I monitor investments but continue during market falls.",
+        "label": "I monitor investments but continue during market falls.",
+        "n": 6,
+        "base": 21
+      },
+      {
+        "key": "I invest regularly and rarely worry about market movements.",
+        "label": "I invest regularly and rarely worry about market movements.",
+        "n": 6,
+        "base": 21
+      },
+      {
+        "key": "I have paused/reduced SIPs due to uncertainty.",
+        "label": "I have paused/reduced SIPs due to uncertainty.",
+        "n": 5,
+        "base": 21
+      },
+      {
+        "key": "I worry often but continue investing.",
+        "label": "I worry often but continue investing.",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "I frequently reconsider my investment decisions.",
+        "label": "I frequently reconsider my investment decisions.",
+        "n": 1,
+        "base": 21
+      }
+    ]
+  }
+}

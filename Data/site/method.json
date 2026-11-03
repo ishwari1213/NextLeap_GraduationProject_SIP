@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-11-02T14:42:55+00:00",
+  "last_updated": "2026-11-01",
+  "formula": "Score = 100 × (0.40 × reach + 0.30 × severity + 0.15 × stage fit + 0.15 × segment fit)",
+  "weights": {
+    "reach": 0.4,
+    "severity": 0.3,
+    "stage_fit": 0.15,
+    "segment_fit": 0.15
+  },
+  "min_posts_per_part": 5,
+  "definitions": {
+    "reach": "the opportunity's problem posts divided by the largest opportunity's",
+    "severity": "share of its posts stating an event that report stopping, pausing, reducing or considering stopping",
+    "stage_fit": "share of its posts stating a stage that sit in the first 12 months (onboarding to months 7–12)",
+    "segment_fit": "share of its posts stating experience that come from first-time investors"
+  },
+  "opportunity_failure_modes": {
+    "Reliable instalments": [
+      "Instalment failed",
+      "Debited after cancel or twice"
+    ],
+    "Clear returns and progress": [
+      "Confusing returns or progress"
+    ],
+    "Confidence through early losses": [
+      "Losses shake confidence"
+    ],
+    "Flexible SIP controls": [
+      "Cannot pause or change amount",
+      "Amount too high"
+    ],
+    "Easy return after a pause": []
+  },
+  "context_only": [
+    "App bug",
+    "Withdrawal problem",
+    "Support not resolving"
+  ],
+  "tagging": {
+    "status": "computed",
+    "model": "ministral-14b-latest",
+    "prompt_version": "v1",
+    "tagged_by_model": 5704,
+    "tagged_by_rule": 12803,
+    "invalid_labels_dropped": 0,
+    "still_untagged": 0
+  },
+  "evidence_counts": {
+    "posts": 18507,
+    "sip_posts": 2324,
+    "problem_posts": 899
+  }
+}

@@ -1,0 +1,18 @@
+# Streamlit settings for the SIP Discovery Engine site (run from the Code/ folder).
+# Theme from the UI spec: one teal accent, warm off-white background, white cards.
+
+[theme]
+base = "light"
+primaryColor = "#0b6e69"
+backgroundColor = "#f5f3ee"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#1f2a2a"
+font = "sans serif"
+baseFontSize = 16
+
+[server]
+port = 8502          # 8501 is taken by another local app
+headless = true
+
+[browser]
+gatherUsageStats = false

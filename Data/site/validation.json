@@ -1,0 +1,604 @@
+{
+  "generated_at": "2026-11-02T14:42:55+00:00",
+  "last_updated": "2026-11-01",
+  "tagging": {
+    "status": "computed",
+    "model": "ministral-14b-latest",
+    "prompt_version": "v1",
+    "tagged_by_model": 5704,
+    "tagged_by_rule": 12803,
+    "invalid_labels_dropped": 0,
+    "still_untagged": 0
+  },
+  "retrieval": {
+    "status": "computed",
+    "run_at": "2026-11-02T01:28:02+00:00",
+    "golden_set": "AI-drafted (16 discovery questions + 4 refusals); relevance judged by the engine's tags; needs human review",
+    "top3_hit_rate": 1.0,
+    "top3_hits": 16,
+    "in_scope_items": 16,
+    "target": 0.8,
+    "meets_target": true,
+    "refusal_rate": 1.0,
+    "refusals_ok": 4,
+    "refusal_items": 4,
+    "routing_accuracy": 1.0,
+    "routed_items": 16,
+    "personal_data_in_excerpts": 0,
+    "items": [
+      {
+        "id": "g01",
+        "question": "What leads investors to pause, reduce or stop a SIP?",
+        "status": "evidence",
+        "reason": null,
+        "route": "failure-modes",
+        "expected_section": "failure-modes",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:groww:5b647cb39e69cb17",
+            "score": 0.7529,
+            "text": "Its service is very poor, I have been using it for the last 3 years but if a SIP gets started by mistake then they are s"
+          },
+          {
+            "record_id": "play_store:groww:0c357a879855f285",
+            "score": 0.7363,
+            "text": "First thing they don't have customer care.. if you chat with them they will reply after a day.. My sip amount not debite"
+          },
+          {
+            "record_id": "play_store:zerodha_coin:c4223e9d39f8cb63",
+            "score": 0.7224,
+            "text": "In daily sip....no sip is deducted...there is no option to solve it...I have created 2 sip with proper mandates but no s"
+          }
+        ]
+      },
+      {
+        "id": "g02",
+        "question": "Why do SIP instalments fail even after money is debited?",
+        "status": "evidence",
+        "reason": null,
+        "route": "failure-modes",
+        "expected_section": "failure-modes",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:groww:0c357a879855f285",
+            "score": 0.7762,
+            "text": "First thing they don't have customer care.. if you chat with them they will reply after a day.. My sip amount not debite"
+          },
+          {
+            "record_id": "forums:tradingqna:95c4c0eacdc073c0",
+            "score": 0.7622,
+            "text": "Ya it seems there is some issue. Mandate is approved but payment failed for my sip (though no deduction from bank and ge"
+          },
+          {
+            "record_id": "play_store:zerodha_coin:c4223e9d39f8cb63",
+            "score": 0.7449,
+            "text": "In daily sip....no sip is deducted...there is no option to solve it...I have created 2 sip with proper mandates but no s"
+          }
+        ]
+      },
+      {
+        "id": "g03",
+        "question": "Why do people start a SIP, and what do they expect to happen?",
+        "status": "evidence",
+        "reason": null,
+        "route": "expectations",
+        "expected_section": "expectations",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:zerodha_coin:b7eb7d28e3219eb8",
+            "score": 0.8141,
+            "text": "The reason why people start with a SIP is for a goal. I wish they gave some insights about how far am I from my goal or "
+          },
+          {
+            "record_id": "play_store:kotak_mf:544181d4d6c1cefc",
+            "score": 0.6997,
+            "text": "Simple, fast, and efficient. Great for starting and managing SIPs without any complications."
+          },
+          {
+            "record_id": "reddit:indiainvestments:b8b11eb38f047335",
+            "score": 0.7265,
+            "text": "Research on Groww SIP Experiences – Need Your Help"
+          }
+        ]
+      },
+      {
+        "id": "g04",
+        "question": "What changes in investor behaviour in the months after starting a SIP?",
+        "status": "evidence",
+        "reason": null,
+        "route": "stages",
+        "expected_section": "stages",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:kotak_mf:dde1504c6279f86a",
+            "score": 0.7552,
+            "text": "Seven months so far and my SIP is still running without any issues and I check the portfolio page ēvery week to see how "
+          },
+          {
+            "record_id": "forums:tradingqna:058c200e38bb0fc5",
+            "score": 0.7451,
+            "text": "I already have SIP mandates. Do I need to do anything? I doubt if my SIPs are AMC SIP."
+          },
+          {
+            "record_id": "forums:tradingqna:ab3892241f6acb97",
+            "score": 0.7324,
+            "text": "[USER] any update on mandates for SIP’s?"
+          }
+        ]
+      },
+      {
+        "id": "g05",
+        "question": "What do investors check, and how often, once they have started?",
+        "status": "evidence",
+        "reason": null,
+        "route": "checking",
+        "expected_section": "checking",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:kotak_mf:dde1504c6279f86a",
+            "score": 0.6354,
+            "text": "Seven months so far and my SIP is still running without any issues and I check the portfolio page ēvery week to see how "
+          },
+          {
+            "record_id": "play_store:et_money:8cec62be1b84aad5",
+            "score": 0.6578,
+            "text": "not for small investors . normally you can't see your portfolio and sip breakdown"
+          },
+          {
+            "record_id": "play_store:groww:7180752543c8b59e",
+            "score": 0.5904,
+            "text": "Sip becomes separate folios & delay in getting invested amount after stocks are sold. They say a certain % of money post"
+          }
+        ]
+      },
+      {
+        "id": "g06",
+        "question": "What confuses or worries investors inside the app?",
+        "status": "evidence",
+        "reason": null,
+        "route": "confusion",
+        "expected_section": "confusion",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:et_money:3538531e9614c606",
+            "score": 0.6036,
+            "text": "very good app, have been using for. years, however i have never seen publicity about the same, Sometimes this gives me s"
+          },
+          {
+            "record_id": "play_store:groww:2ecc01dbf207141b",
+            "score": 0.5773,
+            "text": "There is a big scam going on returns with this app. Sometime the day return showing higher and if you see total returns "
+          },
+          {
+            "record_id": "play_store:zerodha_coin:8f42a0c27a250b44",
+            "score": 0.5707,
+            "text": "This app is completely unreliable. I ordered a mutual fund through the Coin app. The money was deducted, and I received "
+          }
+        ]
+      },
+      {
+        "id": "g07",
+        "question": "Where do investors go when they are unsure?",
+        "status": "evidence",
+        "reason": null,
+        "route": "outside-the-app",
+        "expected_section": "outside-the-app",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "forums:tradingqna:3db16f1c10c23a4c",
+            "score": 0.6098,
+            "text": "Just curious. Why can’t you invest directly from AMC?"
+          },
+          {
+            "record_id": "reddit:indiainvestments:82500a52e688cb14",
+            "score": 0.5284,
+            "text": "Okay! Which AMCs allow nri investments?"
+          },
+          {
+            "record_id": "forums:tradingqna:039911edc0d26321",
+            "score": 0.5188,
+            "text": "If funds are debited via the payment gateway that’s managed by Groww or the fund pooled at Groww for some reason to be S"
+          }
+        ]
+      },
+      {
+        "id": "g08",
+        "question": "What separates investors who continue from those who quietly drop off?",
+        "status": "evidence",
+        "reason": null,
+        "route": "continuers",
+        "expected_section": "continuers",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:groww:60f1dd0db6771e8c",
+            "score": 0.5729,
+            "text": "Allow us to pause SIPs indefinitely. Currently you can skip 1 installment or cancel completely but I just want to pause "
+          },
+          {
+            "record_id": "play_store:groww:c92096988899c5dc",
+            "score": 0.5527,
+            "text": "Not a good experience, whenever a SIP get cancelled I lost same amount of that cancelled SIP and never got a refund. At "
+          },
+          {
+            "record_id": "play_store:groww:ef62c9b9682ddf10",
+            "score": 0.5515,
+            "text": "Hey groww ! Nice app Really easy to use and reliable I would suggest to add the feature of pausing the sips for a period"
+          }
+        ]
+      },
+      {
+        "id": "g09",
+        "question": "How do SIP patterns differ across user segments like age, income and residency?",
+        "status": "evidence",
+        "reason": null,
+        "route": "segments",
+        "expected_section": "segments",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "reddit:indiainvestments:7529c0bfb9c30160",
+            "score": 0.5264,
+            "text": "Just turned 18, getting ₹10k/month allowance to learn investing. Complete beginner, how to start with SIP on Groww?"
+          },
+          {
+            "record_id": "play_store:zerodha_coin:b7eb7d28e3219eb8",
+            "score": 0.5701,
+            "text": "The reason why people start with a SIP is for a goal. I wish they gave some insights about how far am I from my goal or "
+          },
+          {
+            "record_id": "play_store:kotak_mf:417da65287824d91",
+            "score": 0.5122,
+            "text": "Everything is well structured. From selecting funds to starting SIP, the flow is smooth."
+          }
+        ]
+      },
+      {
+        "id": "g10",
+        "question": "How do first-time investors differ from experienced ones?",
+        "status": "evidence",
+        "reason": null,
+        "route": "first-time",
+        "expected_section": "first-time",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:kotak_mf:f07d2911c256ed06",
+            "score": 0.6666,
+            "text": "Investing in this SIP mutual fund has been a smooth and rewarding experience. It's a great option for long-term wealth c"
+          },
+          {
+            "record_id": "play_store:kotak_mf:d3fd8a5390220ea3",
+            "score": 0.716,
+            "text": "I'll admit, I was a bit hesitant about starting my investment journey. But kotak mutual fund app made it so simple and "
+          },
+          {
+            "record_id": "play_store:groww:52f37d76a3fcb44d",
+            "score": 0.656,
+            "text": "it's very easy to use and understand the all trading details and you can easily invest, sale & purchase your share as we"
+          }
+        ]
+      },
+      {
+        "id": "g11",
+        "question": "Which opportunity should we solve first, and why?",
+        "status": "evidence",
+        "reason": null,
+        "route": "opportunities",
+        "expected_section": "opportunities",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "forums:tradingqna:0e7ea30605e59e23",
+            "score": 0.609,
+            "text": "I have two Sip and one was paid … while doing for second one there was an error and it went wrong… but the money is debi"
+          },
+          {
+            "record_id": "play_store:groww:559d86cc9ccc1159",
+            "score": 0.5917,
+            "text": "Decided to do my first SIP, transaction failed twice ,finally on third attempt it worked ,but they are showing transacti"
+          },
+          {
+            "record_id": "play_store:groww:344b661e053a8733",
+            "score": 0.5809,
+            "text": "Worst experience.. please try any other application. Since last 8 months I am facing issue and was not able to continue "
+          }
+        ]
+      },
+      {
+        "id": "g12",
+        "question": "What unmet needs emerge consistently across conversations?",
+        "status": "evidence",
+        "reason": null,
+        "route": "opportunities",
+        "expected_section": "opportunities",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:groww:559d86cc9ccc1159",
+            "score": 0.6296,
+            "text": "Decided to do my first SIP, transaction failed twice ,finally on third attempt it worked ,but they are showing transacti"
+          },
+          {
+            "record_id": "forums:tradingqna:5a7a9bff468b5bfa",
+            "score": 0.6117,
+            "text": "there is some problem in the system. What i have noticed is if there is holiday/weekend in between chances of failure is"
+          },
+          {
+            "record_id": "play_store:groww:ec423d29e0b60954",
+            "score": 0.5962,
+            "text": "Disappointed with customer support of this app. I raised an issue about a failed transaction since last month. Even afte"
+          }
+        ]
+      },
+      {
+        "id": "g13",
+        "question": "Do market falls and losses make investors stop their SIPs?",
+        "status": "evidence",
+        "reason": null,
+        "route": "triggers",
+        "expected_section": "triggers",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:groww:c92096988899c5dc",
+            "score": 0.7069,
+            "text": "Not a good experience, whenever a SIP get cancelled I lost same amount of that cancelled SIP and never got a refund. At "
+          },
+          {
+            "record_id": "play_store:groww:3c3b2aa73393176b",
+            "score": 0.6892,
+            "text": "Please send advanced notification for SIP Mandate. I am one more failed transaction away from being in overall loss from"
+          },
+          {
+            "record_id": "forums:tradingqna:11770e83540e2c90",
+            "score": 0.6627,
+            "text": "Your SIPs will be cancelled but your existing investments will remain as is and you’ll see the NAV."
+          }
+        ]
+      },
+      {
+        "id": "g14",
+        "question": "Why can't investors easily pause or change their SIP amount?",
+        "status": "evidence",
+        "reason": null,
+        "route": "failure-modes",
+        "expected_section": "failure-modes",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:groww:0c357a879855f285",
+            "score": 0.7434,
+            "text": "First thing they don't have customer care.. if you chat with them they will reply after a day.. My sip amount not debite"
+          },
+          {
+            "record_id": "play_store:zerodha_coin:c4223e9d39f8cb63",
+            "score": 0.7399,
+            "text": "In daily sip....no sip is deducted...there is no option to solve it...I have created 2 sip with proper mandates but no s"
+          },
+          {
+            "record_id": "play_store:groww:5b647cb39e69cb17",
+            "score": 0.7331,
+            "text": "Its service is very poor, I have been using it for the last 3 years but if a SIP gets started by mistake then they are s"
+          }
+        ]
+      },
+      {
+        "id": "g15",
+        "question": "What problems do investors face with SIP autopay mandates?",
+        "status": "evidence",
+        "reason": null,
+        "route": "failure-modes",
+        "expected_section": "failure-modes",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:zerodha_coin:d79c301af04574e6",
+            "score": 0.7621,
+            "text": "SIP works horribly with bank mandates."
+          },
+          {
+            "record_id": "forums:tradingqna:95c4c0eacdc073c0",
+            "score": 0.7434,
+            "text": "Ya it seems there is some issue. Mandate is approved but payment failed for my sip (though no deduction from bank and ge"
+          },
+          {
+            "record_id": "play_store:groww:e67331ec28a642f4",
+            "score": 0.7343,
+            "text": "I had the worst experience with their support team. I reached out multiple times, even providing screen recordings, but "
+          }
+        ]
+      },
+      {
+        "id": "g16",
+        "question": "Why are SIP returns and P&L confusing in investment apps?",
+        "status": "evidence",
+        "reason": null,
+        "route": "confusion",
+        "expected_section": "confusion",
+        "hit": true,
+        "routed_ok": true,
+        "top3": [
+          {
+            "record_id": "play_store:zerodha_coin:b3524a7992c23195",
+            "score": 0.6592,
+            "text": "It doesn't show investment properly. It doesn't update the sip and show accurate invested and current amounts."
+          },
+          {
+            "record_id": "play_store:groww:2ecc01dbf207141b",
+            "score": 0.5869,
+            "text": "There is a big scam going on returns with this app. Sometime the day return showing higher and if you see total returns "
+          },
+          {
+            "record_id": "play_store:groww:003688b4909132a5",
+            "score": 0.582,
+            "text": "I'm mainly using it for mutual fund. And it doesn't tells overall picture of my investment in clear format. No one knows"
+          }
+        ]
+      },
+      {
+        "id": "g17",
+        "question": "Which is the safest SIP to invest in?",
+        "status": "out_of_scope",
+        "reason": "investment_advice",
+        "route": null,
+        "expected_section": null,
+        "refused": true
+      },
+      {
+        "id": "g18",
+        "question": "Should I stop my SIP now?",
+        "status": "out_of_scope",
+        "reason": "investment_advice",
+        "route": null,
+        "expected_section": null,
+        "refused": true
+      },
+      {
+        "id": "g19",
+        "question": "How much will 5000 a month become in 10 years?",
+        "status": "out_of_scope",
+        "reason": "returns_or_projection",
+        "route": null,
+        "expected_section": null,
+        "refused": true
+      },
+      {
+        "id": "g20",
+        "question": "What is the capital of France?",
+        "status": "out_of_scope",
+        "reason": "off_topic",
+        "route": "pipeline",
+        "expected_section": null,
+        "refused": true
+      }
+    ],
+    "misses": [],
+    "holdout": {
+      "top3_hit_rate": 0.714,
+      "top3_hits": 5,
+      "in_scope_items": 7,
+      "refusals_ok": 1,
+      "refusal_items": 1,
+      "routing_accuracy": 0.571,
+      "misses": [
+        {
+          "id": "h2",
+          "question": "Why would someone give up on their monthly mutual fund investment?",
+          "status": "out_of_scope",
+          "reason": "off_topic",
+          "route": "checking",
+          "expected_section": "failure-modes",
+          "hit": false,
+          "routed_ok": false,
+          "top3": [],
+          "problem": "no relevant excerpt in the top 3"
+        },
+        {
+          "id": "h3",
+          "question": "Do people understand the profit and loss numbers they see for their SIPs?",
+          "status": "evidence",
+          "reason": null,
+          "route": "expectations",
+          "expected_section": "confusion",
+          "hit": false,
+          "routed_ok": false,
+          "top3": [
+            {
+              "record_id": "play_store:zerodha_coin:b7eb7d28e3219eb8",
+              "score": 0.8125,
+              "text": "The reason why people start with a SIP is for a goal. I wish they gave some insights about how far am I from my goal or "
+            },
+            {
+              "record_id": "play_store:groww:d35630fb7a32e095",
+              "score": 0.7285,
+              "text": "It's a fantastic application for Investment with better expected yielding, Creating an SIP is very easier here and also "
+            },
+            {
+              "record_id": "play_store:kotak_mf:f409b0a6fce71561",
+              "score": 0.7125,
+              "text": "not good. no option of increasing sip by percentage yearly in existing sip and new sip both"
+            }
+          ],
+          "problem": "no relevant excerpt in the top 3"
+        }
+      ]
+    }
+  },
+  "agreement": {
+    "status": "not_computed",
+    "reason": "Agreement between the engine's tags and a person's labels on the same posts.",
+    "missing_step": "a person labels a sample of posts (Data/eval/human_labels.csv) so the engine's tags can be compared"
+  },
+  "survey": {
+    "status": "computed",
+    "sample": {
+      "n": 21,
+      "responses": 23,
+      "top_age": "26-30",
+      "top_occupation": "Salaried Employee",
+      "under_a_year": 3,
+      "note": "Survey of 21 SIP investors (23 responses), mostly aged 26-30 and salaried; 3 are under a year into their SIP. A small convenience sample: figures are 'n of 21', not population percentages."
+    },
+    "comparison": [
+      {
+        "theme": "Failed instalments",
+        "engine": "476 problem posts",
+        "survey": "Not asked",
+        "reading": "Untested"
+      },
+      {
+        "theme": "Understanding returns and progress",
+        "engine": "157 SIP posts confused by returns or P&L",
+        "survey": "14 of 21 look at profit/loss or return % first; 6 find market movements hard to understand",
+        "reading": "Supported"
+      },
+      {
+        "theme": "Fear of losses",
+        "engine": "5 problem posts (1%)",
+        "survey": "9 of 21 name fear of losing money as a challenge",
+        "reading": "Engine under-counts"
+      },
+      {
+        "theme": "Cash-flow fit",
+        "engine": "20 SIP posts (amount too high or a cash-flow trigger)",
+        "survey": "15 of 21 say job loss, income cuts, emergencies or family duties would make them stop",
+        "reading": "Engine under-counts"
+      },
+      {
+        "theme": "Adjusting instead of quitting",
+        "engine": "62 problem posts on pausing or changing the amount",
+        "survey": "12 of 21 have considered stopping, pausing or reducing",
+        "reading": "Supported"
+      },
+      {
+        "theme": "Help outside the app",
+        "engine": "790 SIP posts seeking help outside the app",
+        "survey": "3 of 21 ask their investment app; 12 use Google, 12 friends or family, 9 YouTube",
+        "reading": "Supported"
+      }
+    ]
+  }
+}

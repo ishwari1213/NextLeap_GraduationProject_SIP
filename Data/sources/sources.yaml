@@ -1,0 +1,64 @@
+# Ingestion sources for Phase 1 (Data loading).
+# Every URL comes from the PRD appendix "Data ingestion URLs" (link check 2026-11-01).
+#
+# status : active  = load it
+#          dropped = kept for traceability, never loaded
+# app    : set only when the whole source is about one app or provider
+# fetch  : (team_bhp, info_pages) html = live page, wayback = latest Wayback Machine copy,
+#          upload = file you download by hand into Data/uploads/
+
+play_store:   # optional per app: count (reviews per sort order) and sorts [newest, most_relevant]
+  - {app: Groww,        app_id: com.nextbillion.groww,      url: "https://play.google.com/store/apps/details?id=com.nextbillion.groww",      status: active, count: 5000, sorts: [newest, most_relevant]}
+  - {app: Paytm Money,  app_id: com.paytmmoney,             url: "https://play.google.com/store/apps/details?id=com.paytmmoney",             status: active}
+  - {app: Zerodha Coin, app_id: com.zerodha.coin,           url: "https://play.google.com/store/apps/details?id=com.zerodha.coin",           status: active}
+  - {app: ET Money,     app_id: com.smartspends,            url: "https://play.google.com/store/apps/details?id=com.smartspends",            status: active}
+  - {app: INDmoney,     app_id: in.indwealth,               url: "https://play.google.com/store/apps/details?id=in.indwealth",               status: active}
+  - {app: Upstox,       app_id: in.upstox.app,              url: "https://play.google.com/store/apps/details?id=in.upstox.app",              status: active}
+  - {app: Zerodha Kite, app_id: com.zerodha.kite3,          url: "https://play.google.com/store/apps/details?id=com.zerodha.kite3",          status: active}
+  - {app: Angel One,    app_id: com.msf.angelmobile,        url: "https://play.google.com/store/apps/details?id=com.msf.angelmobile",        status: active}
+  - {app: Kotak MF,     app_id: com.godbtech.kotakmf,       url: "https://play.google.com/store/apps/details?id=com.godbtech.kotakmf",       status: active}
+  - {app: Sundaram MF,  app_id: com.sundarammutal.invappv2, url: "https://play.google.com/store/apps/details?id=com.sundarammutal.invappv2", status: active}
+  - {app: ICICI Pru MF, app_id: com.iPruAMC,                url: "https://play.google.com/store/apps/details?id=com.iPruAMC",                status: active}
+
+app_store:
+  - {app: Groww,        app_id: "1404871703", url: "https://apps.apple.com/in/app/groww-stocks-mutual-fund-ipo/id1404871703", status: active}
+  - {app: Zerodha Kite, app_id: "1449453802", url: "https://apps.apple.com/in/app/id1449453802?see-all=reviews",              status: active}
+  - {app: Kotak MF,     app_id: "878896606",  url: "https://apps.apple.com/in/app/id878896606?see-all=reviews",               status: active}
+  - {app: ICICI Pru MF, app_id: "862996339",  url: "https://apps.apple.com/in/app/id862996339?see-all=reviews",               status: active}
+  - {app: Sundaram MF,  app_id: "6742233114", url: "https://apps.apple.com/in/app/id6742233114?see-all=reviews",              status: active}
+
+forums:   # Discourse forums, loaded through their JSON endpoints
+  - {platform: tradingqna,   kind: topic,  url: "https://tradingqna.com/t/coins-customer-workflow-is-broken-for-auto-sip/173335", status: active}
+  - {platform: tradingqna,   kind: topic,  url: "https://tradingqna.com/t/discontinuation-of-pooling-for-mutual-funds-and-how-it-affects-coin/120947", status: active}
+  - {platform: tradingqna,   kind: topic,  url: "https://tradingqna.com/t/coin-sip-vs-amc-sip/127618", status: active}
+  - {platform: tradingqna,   kind: topic,  url: "https://tradingqna.com/t/coin-sip-is-it-really-sip/39724", status: active}
+  - {platform: tradingqna,   kind: topic,  url: "https://tradingqna.com/t/zerodha-coin-is-minimalism-turning-into-neglect/193950", status: active}
+  - {platform: tradingqna,   kind: topic,  url: "https://tradingqna.com/t/which-is-the-easiest-and-best-mutual-fund-investment-platform/128149", status: active}
+  - {platform: tradingqna,   kind: search, query: "groww sip", url: "https://tradingqna.com/search?q=groww%20sip", status: active}
+  - {platform: jupiter,      kind: topic,  url: "https://community.jupiter.money/t/mutual-funds-which-app-why/2177", status: active}
+  - {platform: madefortrade, kind: topic,  url: "https://madefortrade.in/t/auto-payment-limit-set-in-mutual-funds/22208", status: active}
+
+reddit:   # Reddit API when REDDIT_CLIENT_ID/SECRET are set, otherwise the Arctic Shift archive
+  - {platform: IndiaInvestments, kind: post,   post_id: qmdq75,   url: "https://www.reddit.com/r/IndiaInvestments/comments/qmdq75/", status: active}
+  - {platform: IndiaInvestments, kind: search, query: "groww sip", url: "https://www.reddit.com/r/IndiaInvestments/search/?q=groww%20sip&restrict_sr=1", status: active}
+
+team_bhp: # live site blocks scripts (Cloudflare); use the Wayback copy
+  - {platform: team_bhp, fetch: wayback, url: "https://www.team-bhp.com/forum/shifting-gears/105873-mutual-funds-thread-344.html", status: active}
+
+youtube:  # needs YOUTUBE_API_KEY; skipped without it
+  - {platform: youtube, kind: search, query: "groww sip review", url: "https://www.youtube.com/results?search_query=groww+sip+review", status: active}
+
+info_pages: # SIP information: context for factual answers only, never for return calculations
+  - {app: Kotak,        fetch: html,    url: "https://www.kotak.bank.in/en/stories-in-focus/mutual-funds/get-your-basic-queries-answered.html", status: active}
+  - {app: Kotak,        fetch: html,    url: "https://www.kotak.bank.in/en/stories-in-focus/mutual-funds/what-is-sip.html", status: active}
+  - {app: Kotak,        fetch: wayback, url: "https://www.kotakmf.com/sip", status: active}
+  - {app: Kotak,        fetch: upload,  file: kotak_what_is_sip_blog_2026-06.pdf,         url: "https://dms.kotakmf.com/DMS/public/upload/1781087651732_What_is_SIP_Blog_-_10th_June_2026.pdf", status: active}
+  - {app: Kotak,        fetch: upload,  file: kotak_new_sip_page_content_2025-05.pdf,     url: "https://dms.kotakmf.com/DMS/public/upload/1747832702800_New_SIP_Page_Website_Content_-_17th_May_2025.pdf", status: active}
+  - {app: Kotak,        fetch: html,    url: "https://www.kotakneo.com/investing-guide/mutual-funds/sip/", status: active}
+  - {app: Zerodha Coin, fetch: html,    url: "https://support.zerodha.com/category/mutual-funds/features-on-coin/systematic-investment-plan/articles/sip-on-coin", status: active}
+  - {app: Upstox,       fetch: html,    url: "https://upstox.com/learning-center/mutual-funds/what-is-sip-meaning-benefits-factors-how-it-works/article-932/", status: active}
+  - {app: Angel One,    fetch: html,    url: "https://www.angelone.in/knowledge-center/mutual-funds/types-of-sips", status: active}
+  - {app: Groww,        fetch: html,    url: "https://groww.in/calculators/sip-calculator", status: active}
+
+x:        # dropped: the API needs a paid plan (PRD appendix)
+  - {platform: x, url: "https://x.com/search?q=groww%20sip&f=live", status: dropped}

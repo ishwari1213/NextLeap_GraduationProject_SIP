@@ -1,0 +1,646 @@
+{
+  "generated_at": "2026-11-02T14:42:55+00:00",
+  "last_updated": "2026-11-01",
+  "tiles": {
+    "posts": {
+      "status": "computed",
+      "n": 18507,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    "sip_posts": {
+      "status": "computed",
+      "n": 2324,
+      "base": 18507,
+      "share": 0.126,
+      "sample": "ok"
+    },
+    "problem_posts": {
+      "status": "computed",
+      "n": 899,
+      "base": 2324,
+      "share": 0.387,
+      "sample": "ok"
+    },
+    "sources": {
+      "status": "computed",
+      "n": 5
+    }
+  },
+  "opportunities": {
+    "all": [
+      {
+        "id": "reliable_instalments",
+        "name": "Reliable instalments",
+        "driver": "B",
+        "failure_modes": [
+          "instalment_failed",
+          "debited_after_cancel_or_twice"
+        ],
+        "posts": 476,
+        "share_of_problem_posts": 0.529,
+        "parts": {
+          "reach": {
+            "value": 1.0,
+            "n": 476,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.59,
+            "n": 266,
+            "kept": true
+          },
+          "stage_fit": {
+            "value": 0.721,
+            "n": 276,
+            "kept": true
+          },
+          "segment_fit": {
+            "value": 0.383,
+            "n": 60,
+            "kept": true
+          }
+        },
+        "left_out": [],
+        "score": 74,
+        "tag": "Scored",
+        "note": ""
+      },
+      {
+        "id": "flexible_controls",
+        "name": "Flexible SIP controls",
+        "driver": "D",
+        "failure_modes": [
+          "cannot_pause_or_change_amount",
+          "amount_too_high"
+        ],
+        "posts": 65,
+        "share_of_problem_posts": 0.072,
+        "parts": {
+          "reach": {
+            "value": 0.137,
+            "n": 65,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.854,
+            "n": 48,
+            "kept": true
+          },
+          "stage_fit": {
+            "value": 0.24,
+            "n": 25,
+            "kept": true
+          },
+          "segment_fit": {
+            "value": 0.25,
+            "n": 4,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "segment_fit"
+        ],
+        "score": 41,
+        "tag": "Scored",
+        "note": ""
+      },
+      {
+        "id": "clear_returns",
+        "name": "Clear returns and progress",
+        "driver": "C",
+        "failure_modes": [
+          "confusing_returns_or_progress"
+        ],
+        "posts": 12,
+        "share_of_problem_posts": 0.013,
+        "parts": {
+          "reach": {
+            "value": 0.025,
+            "n": 12,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.778,
+            "n": 9,
+            "kept": true
+          },
+          "stage_fit": {
+            "value": 0.0,
+            "n": 5,
+            "kept": true
+          },
+          "segment_fit": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "segment_fit"
+        ],
+        "score": 29,
+        "tag": "Scored",
+        "note": ""
+      },
+      {
+        "id": "confidence_losses",
+        "name": "Confidence through early losses",
+        "driver": "C",
+        "failure_modes": [
+          "losses_shake_confidence"
+        ],
+        "posts": 5,
+        "share_of_problem_posts": 0.006,
+        "parts": {
+          "reach": {
+            "value": 0.011,
+            "n": 5,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.5,
+            "n": 2,
+            "kept": false
+          },
+          "stage_fit": {
+            "value": 0.5,
+            "n": 2,
+            "kept": false
+          },
+          "segment_fit": {
+            "value": 1.0,
+            "n": 1,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "severity",
+          "stage_fit",
+          "segment_fit"
+        ],
+        "score": 1,
+        "tag": "Small sample",
+        "note": ""
+      },
+      {
+        "id": "easy_return",
+        "name": "Easy return after a pause",
+        "driver": "D",
+        "failure_modes": [],
+        "posts": 0,
+        "share_of_problem_posts": 0.0,
+        "parts": {
+          "reach": {
+            "value": 0.0,
+            "n": 0,
+            "kept": false
+          },
+          "severity": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          },
+          "stage_fit": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          },
+          "segment_fit": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "reach",
+          "severity",
+          "stage_fit",
+          "segment_fit"
+        ],
+        "score": null,
+        "tag": "Not scored",
+        "note": "No tag captures restarting after a pause, so this opportunity cannot be scored yet."
+      }
+    ],
+    "groww": [
+      {
+        "id": "reliable_instalments",
+        "name": "Reliable instalments",
+        "driver": "B",
+        "failure_modes": [
+          "instalment_failed",
+          "debited_after_cancel_or_twice"
+        ],
+        "posts": 155,
+        "share_of_problem_posts": 0.484,
+        "parts": {
+          "reach": {
+            "value": 1.0,
+            "n": 155,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.574,
+            "n": 101,
+            "kept": true
+          },
+          "stage_fit": {
+            "value": 0.638,
+            "n": 105,
+            "kept": true
+          },
+          "segment_fit": {
+            "value": 0.405,
+            "n": 42,
+            "kept": true
+          }
+        },
+        "left_out": [],
+        "score": 73,
+        "tag": "Scored",
+        "note": ""
+      },
+      {
+        "id": "flexible_controls",
+        "name": "Flexible SIP controls",
+        "driver": "D",
+        "failure_modes": [
+          "cannot_pause_or_change_amount",
+          "amount_too_high"
+        ],
+        "posts": 20,
+        "share_of_problem_posts": 0.062,
+        "parts": {
+          "reach": {
+            "value": 0.129,
+            "n": 20,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.778,
+            "n": 18,
+            "kept": true
+          },
+          "stage_fit": {
+            "value": 0.3,
+            "n": 10,
+            "kept": true
+          },
+          "segment_fit": {
+            "value": 0.0,
+            "n": 1,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "segment_fit"
+        ],
+        "score": 39,
+        "tag": "Scored",
+        "note": ""
+      },
+      {
+        "id": "clear_returns",
+        "name": "Clear returns and progress",
+        "driver": "C",
+        "failure_modes": [
+          "confusing_returns_or_progress"
+        ],
+        "posts": 6,
+        "share_of_problem_posts": 0.019,
+        "parts": {
+          "reach": {
+            "value": 0.039,
+            "n": 6,
+            "kept": true
+          },
+          "severity": {
+            "value": 0.833,
+            "n": 6,
+            "kept": true
+          },
+          "stage_fit": {
+            "value": 0.0,
+            "n": 4,
+            "kept": false
+          },
+          "segment_fit": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "stage_fit",
+          "segment_fit"
+        ],
+        "score": 38,
+        "tag": "Small sample",
+        "note": ""
+      },
+      {
+        "id": "confidence_losses",
+        "name": "Confidence through early losses",
+        "driver": "C",
+        "failure_modes": [
+          "losses_shake_confidence"
+        ],
+        "posts": 1,
+        "share_of_problem_posts": 0.003,
+        "parts": {
+          "reach": {
+            "value": 0.006,
+            "n": 1,
+            "kept": false
+          },
+          "severity": {
+            "value": 0.0,
+            "n": 1,
+            "kept": false
+          },
+          "stage_fit": {
+            "value": 0.0,
+            "n": 1,
+            "kept": false
+          },
+          "segment_fit": {
+            "value": 1.0,
+            "n": 1,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "reach",
+          "severity",
+          "stage_fit",
+          "segment_fit"
+        ],
+        "score": null,
+        "tag": "Not scored",
+        "note": "Fewer than 5 posts, so not scored."
+      },
+      {
+        "id": "easy_return",
+        "name": "Easy return after a pause",
+        "driver": "D",
+        "failure_modes": [],
+        "posts": 0,
+        "share_of_problem_posts": 0.0,
+        "parts": {
+          "reach": {
+            "value": 0.0,
+            "n": 0,
+            "kept": false
+          },
+          "severity": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          },
+          "stage_fit": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          },
+          "segment_fit": {
+            "value": null,
+            "n": 0,
+            "kept": false
+          }
+        },
+        "left_out": [
+          "reach",
+          "severity",
+          "stage_fit",
+          "segment_fit"
+        ],
+        "score": null,
+        "tag": "Not scored",
+        "note": "No tag captures restarting after a pause, so this opportunity cannot be scored yet."
+      }
+    ]
+  },
+  "scope_sizes": {
+    "all": 899,
+    "groww": 320
+  },
+  "failure_modes": {
+    "all": {
+      "status": "computed",
+      "rows": [
+        {
+          "key": "instalment_failed",
+          "label": "Instalment failed",
+          "n": 451,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "app_bug",
+          "label": "App bug",
+          "n": 152,
+          "sample": "ok",
+          "context_only": true
+        },
+        {
+          "key": "withdrawal_problem",
+          "label": "Withdrawal problem",
+          "n": 144,
+          "sample": "ok",
+          "context_only": true
+        },
+        {
+          "key": "cannot_pause_or_change_amount",
+          "label": "Cannot pause or change amount",
+          "n": 62,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "support_not_resolving",
+          "label": "Support not resolving",
+          "n": 45,
+          "sample": "ok",
+          "context_only": true
+        },
+        {
+          "key": "debited_after_cancel_or_twice",
+          "label": "Debited after cancel or twice",
+          "n": 25,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "confusing_returns_or_progress",
+          "label": "Confusing returns or progress",
+          "n": 12,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "losses_shake_confidence",
+          "label": "Losses shake confidence",
+          "n": 5,
+          "sample": "low",
+          "context_only": false
+        },
+        {
+          "key": "amount_too_high",
+          "label": "Amount too high",
+          "n": 3,
+          "sample": "low",
+          "context_only": false
+        }
+      ],
+      "stated": 899,
+      "base": 899
+    },
+    "groww": {
+      "status": "computed",
+      "rows": [
+        {
+          "key": "instalment_failed",
+          "label": "Instalment failed",
+          "n": 136,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "withdrawal_problem",
+          "label": "Withdrawal problem",
+          "n": 67,
+          "sample": "ok",
+          "context_only": true
+        },
+        {
+          "key": "app_bug",
+          "label": "App bug",
+          "n": 41,
+          "sample": "ok",
+          "context_only": true
+        },
+        {
+          "key": "support_not_resolving",
+          "label": "Support not resolving",
+          "n": 30,
+          "sample": "ok",
+          "context_only": true
+        },
+        {
+          "key": "cannot_pause_or_change_amount",
+          "label": "Cannot pause or change amount",
+          "n": 20,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "debited_after_cancel_or_twice",
+          "label": "Debited after cancel or twice",
+          "n": 19,
+          "sample": "ok",
+          "context_only": false
+        },
+        {
+          "key": "confusing_returns_or_progress",
+          "label": "Confusing returns or progress",
+          "n": 6,
+          "sample": "low",
+          "context_only": false
+        },
+        {
+          "key": "losses_shake_confidence",
+          "label": "Losses shake confidence",
+          "n": 1,
+          "sample": "low",
+          "context_only": false
+        }
+      ],
+      "stated": 320,
+      "base": 320
+    }
+  },
+  "metric_tree": [
+    {
+      "id": "A",
+      "label": "Set-up works",
+      "status": "computed",
+      "n": 83,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    {
+      "id": "B",
+      "label": "Instalments keep succeeding",
+      "status": "computed",
+      "n": 476,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    {
+      "id": "C",
+      "label": "Understands progress and keeps confidence",
+      "status": "computed",
+      "n": 17,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    {
+      "id": "D",
+      "label": "Can adjust instead of quitting",
+      "status": "computed",
+      "n": 65,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    {
+      "id": "E",
+      "label": "Gets help when stuck",
+      "status": "computed",
+      "n": 819,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    }
+  ],
+  "insights": [
+    "Reliable instalments scores highest (74): 476 of 899 problem posts (53%).",
+    "341 problem posts (38%) are app bugs, withdrawals or support issues; they are real but sit outside the SIP opportunity score.",
+    "Expectation is mostly long term: 249 SIP posts expect long-term growth, 5 expect quick gains.",
+    "Evidence is thin where the metric lives: 178 SIP posts sit in months 2 to 12, and 97 come from first-time investors (36 of them state a problem).",
+    "In the survey, 12 of 21 SIP investors have considered stopping, pausing or reducing; looking ahead, 15 name job loss, income cuts, emergencies or family duties as what would make them stop, against 8 for poor returns, a crash or low confidence."
+  ],
+  "survey": {
+    "status": "computed",
+    "sample": {
+      "n": 21,
+      "responses": 23,
+      "top_age": "26-30",
+      "top_occupation": "Salaried Employee",
+      "under_a_year": 3,
+      "note": "Survey of 21 SIP investors (23 responses), mostly aged 26-30 and salaried; 3 are under a year into their SIP. A small convenience sample: figures are 'n of 21', not population percentages."
+    },
+    "surveyed": {
+      "n": 21,
+      "responses": 23
+    },
+    "considered_stopping": {
+      "n": 12,
+      "base": 21
+    },
+    "future_cash": {
+      "n": 15,
+      "base": 21
+    },
+    "active": {
+      "n": 17,
+      "base": 21
+    },
+    "insight": "In the survey, 12 of 21 SIP investors have considered stopping, pausing or reducing; looking ahead, 15 name job loss, income cuts, emergencies or family duties as what would make them stop, against 8 for poor returns, a crash or low confidence."
+  }
+}

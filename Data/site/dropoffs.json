@@ -1,0 +1,589 @@
+{
+  "generated_at": "2026-11-02T14:42:55+00:00",
+  "last_updated": "2026-11-01",
+  "tiles": {
+    "event_stated": {
+      "status": "computed",
+      "n": 1121,
+      "base": 2324,
+      "share": 0.482,
+      "sample": "ok"
+    },
+    "stopped": {
+      "status": "computed",
+      "n": 214,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    "considering": {
+      "status": "computed",
+      "n": 404,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    },
+    "paused_reduced": {
+      "status": "computed",
+      "n": 80,
+      "base": null,
+      "share": null,
+      "sample": "ok"
+    }
+  },
+  "events": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "considering_stopping",
+        "label": "Considering stopping",
+        "n": 404,
+        "sample": "ok"
+      },
+      {
+        "key": "continued",
+        "label": "Continued",
+        "n": 296,
+        "sample": "ok"
+      },
+      {
+        "key": "stopped",
+        "label": "Stopped",
+        "n": 214,
+        "sample": "ok"
+      },
+      {
+        "key": "started",
+        "label": "Started",
+        "n": 127,
+        "sample": "ok"
+      },
+      {
+        "key": "paused",
+        "label": "Paused",
+        "n": 78,
+        "sample": "ok"
+      },
+      {
+        "key": "reduced",
+        "label": "Reduced",
+        "n": 2,
+        "sample": "low"
+      }
+    ],
+    "stated": 1121,
+    "base": 2324
+  },
+  "failure_modes": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "instalment_failed",
+        "label": "Instalment failed",
+        "n": 451,
+        "sample": "ok",
+        "context_only": false
+      },
+      {
+        "key": "app_bug",
+        "label": "App bug",
+        "n": 152,
+        "sample": "ok",
+        "context_only": true
+      },
+      {
+        "key": "withdrawal_problem",
+        "label": "Withdrawal problem",
+        "n": 144,
+        "sample": "ok",
+        "context_only": true
+      },
+      {
+        "key": "cannot_pause_or_change_amount",
+        "label": "Cannot pause or change amount",
+        "n": 62,
+        "sample": "ok",
+        "context_only": false
+      },
+      {
+        "key": "support_not_resolving",
+        "label": "Support not resolving",
+        "n": 45,
+        "sample": "ok",
+        "context_only": true
+      },
+      {
+        "key": "debited_after_cancel_or_twice",
+        "label": "Debited after cancel or twice",
+        "n": 25,
+        "sample": "ok",
+        "context_only": false
+      },
+      {
+        "key": "confusing_returns_or_progress",
+        "label": "Confusing returns or progress",
+        "n": 12,
+        "sample": "ok",
+        "context_only": false
+      },
+      {
+        "key": "losses_shake_confidence",
+        "label": "Losses shake confidence",
+        "n": 5,
+        "sample": "low",
+        "context_only": false
+      },
+      {
+        "key": "amount_too_high",
+        "label": "Amount too high",
+        "n": 3,
+        "sample": "low",
+        "context_only": false
+      }
+    ],
+    "stated": 899,
+    "base": 899
+  },
+  "triggers": {
+    "status": "computed",
+    "rows": [
+      {
+        "key": "app_bug",
+        "label": "App bug",
+        "n": 409,
+        "sample": "ok"
+      },
+      {
+        "key": "rule_change",
+        "label": "Rule change",
+        "n": 256,
+        "sample": "ok"
+      },
+      {
+        "key": "habit_discipline",
+        "label": "Habit discipline",
+        "n": 64,
+        "sample": "ok"
+      },
+      {
+        "key": "switching_platform_or_plan",
+        "label": "Switching platform or plan",
+        "n": 50,
+        "sample": "ok"
+      },
+      {
+        "key": "charges_or_tax",
+        "label": "Charges or tax",
+        "n": 37,
+        "sample": "ok"
+      },
+      {
+        "key": "fund_issue",
+        "label": "Fund issue",
+        "n": 23,
+        "sample": "ok"
+      },
+      {
+        "key": "goal_or_wealth",
+        "label": "Goal or wealth",
+        "n": 18,
+        "sample": "ok"
+      },
+      {
+        "key": "cash_flow_or_life",
+        "label": "Cash flow or life event",
+        "n": 17,
+        "sample": "ok"
+      },
+      {
+        "key": "market_fall_or_losses",
+        "label": "Market fall or losses",
+        "n": 11,
+        "sample": "ok"
+      }
+    ],
+    "stated": 885,
+    "base": 2324
+  },
+  "market_or_not": {
+    "status": "computed",
+    "losses": {
+      "status": "computed",
+      "n": 5,
+      "base": 899,
+      "share": 0.006,
+      "sample": "low"
+    },
+    "instalments": {
+      "status": "computed",
+      "n": 476,
+      "base": 899,
+      "share": 0.529,
+      "sample": "ok"
+    },
+    "base": 899
+  },
+  "quotes": {
+    "instalment_failed": [
+      {
+        "text": "Grow has a very good user interface but the brokerage is very high while buying and selling you will experience it. don't apply for an…",
+        "source": "Google Play",
+        "month": "Oct 2026"
+      },
+      {
+        "text": "Groww SIP AutoPay failed on Google Pay — Will it retry automatically?",
+        "source": "Reddit",
+        "month": "Oct 2026"
+      },
+      {
+        "text": "I am unable to add account to setup Auto pay for ipo the bank is showing as added but not adding",
+        "source": "Google Play",
+        "month": "Oct 2026"
+      }
+    ],
+    "confusing_returns_or_progress": [
+      {
+        "text": "The latest layout is absolutely horrible for basic investors. You can't even see the performance of each SIP. You tap on My Sip and it…",
+        "source": "Google Play",
+        "month": "Jan 2026"
+      },
+      {
+        "text": "FYI Groww Mutual Fund has fund tracking total market index. I would not suggest it since weightage of anything non-nifty in that index is irrelevant…",
+        "source": "Forums",
+        "month": "Jun 2024"
+      },
+      {
+        "text": "This is almost the end of the day today and still the units information is outdated.",
+        "source": "Forums",
+        "month": "Jan 2024"
+      }
+    ],
+    "losses_shake_confidence": [
+      {
+        "text": "at the end of maturity sip value down rapidly.",
+        "source": "Google Play",
+        "month": "Apr 2026"
+      },
+      {
+        "text": "Dhoirjo dhorun (be patient). You will be invested in equity until you are in your 90s. This kind of correction is normal. Choice of funds…",
+        "source": "Reddit",
+        "month": "Mar 2025"
+      }
+    ]
+  },
+  "continuers_vs_dropoffs": {
+    "status": "computed",
+    "continued": {
+      "n": 296,
+      "sample": "ok",
+      "failure_modes": [
+        {
+          "key": "instalment_failed",
+          "label": "Instalment failed",
+          "n": 90,
+          "sample": "ok"
+        },
+        {
+          "key": "app_bug",
+          "label": "App bug",
+          "n": 27,
+          "sample": "ok"
+        },
+        {
+          "key": "withdrawal_problem",
+          "label": "Withdrawal problem",
+          "n": 19,
+          "sample": "ok"
+        }
+      ],
+      "triggers": [
+        {
+          "key": "app_bug",
+          "label": "App bug",
+          "n": 112,
+          "sample": "ok"
+        },
+        {
+          "key": "rule_change",
+          "label": "Rule change",
+          "n": 39,
+          "sample": "ok"
+        },
+        {
+          "key": "habit_discipline",
+          "label": "Habit discipline",
+          "n": 34,
+          "sample": "ok"
+        }
+      ]
+    },
+    "dropped": {
+      "n": 698,
+      "sample": "ok",
+      "failure_modes": [
+        {
+          "key": "instalment_failed",
+          "label": "Instalment failed",
+          "n": 144,
+          "sample": "ok"
+        },
+        {
+          "key": "withdrawal_problem",
+          "label": "Withdrawal problem",
+          "n": 81,
+          "sample": "ok"
+        },
+        {
+          "key": "app_bug",
+          "label": "App bug",
+          "n": 47,
+          "sample": "ok"
+        }
+      ],
+      "triggers": [
+        {
+          "key": "app_bug",
+          "label": "App bug",
+          "n": 192,
+          "sample": "ok"
+        },
+        {
+          "key": "rule_change",
+          "label": "Rule change",
+          "n": 158,
+          "sample": "ok"
+        },
+        {
+          "key": "switching_platform_or_plan",
+          "label": "Switching platform or plan",
+          "n": 43,
+          "sample": "ok"
+        }
+      ]
+    }
+  },
+  "survey": {
+    "status": "computed",
+    "sample": {
+      "n": 21,
+      "responses": 23,
+      "top_age": "26-30",
+      "top_occupation": "Salaried Employee",
+      "under_a_year": 3,
+      "note": "Survey of 21 SIP investors (23 responses), mostly aged 26-30 and salaried; 3 are under a year into their SIP. A small convenience sample: figures are 'n of 21', not population percentages."
+    },
+    "considered": 12,
+    "active": 17,
+    "inactive": 4,
+    "why_considered": [
+      {
+        "key": "market",
+        "label": "Returns or market worries only",
+        "n": 5,
+        "base": 12
+      },
+      {
+        "key": "cash",
+        "label": "Cash flow or life events only",
+        "n": 4,
+        "base": 12
+      },
+      {
+        "key": "both",
+        "label": "Both",
+        "n": 3,
+        "base": 12
+      }
+    ],
+    "reasons": [
+      {
+        "key": "Poor Returns",
+        "label": "Poor Returns",
+        "n": 5,
+        "base": 12
+      },
+      {
+        "key": "Fear of Losing Money",
+        "label": "Fear of Losing Money",
+        "n": 5,
+        "base": 12
+      },
+      {
+        "key": "Market Fall",
+        "label": "Market Fall",
+        "n": 3,
+        "base": 12
+      },
+      {
+        "key": "Financial Emergency",
+        "label": "Financial Emergency",
+        "n": 3,
+        "base": 12
+      },
+      {
+        "key": "Better Investment Alternatives",
+        "label": "Better Investment Alternatives",
+        "n": 2,
+        "base": 12
+      },
+      {
+        "key": "Lack of Confidence",
+        "label": "Lack of Confidence",
+        "n": 2,
+        "base": 12
+      },
+      {
+        "key": "Job Loss",
+        "label": "Job Loss",
+        "n": 2,
+        "base": 12
+      },
+      {
+        "key": "Family Expenses",
+        "label": "Family Expenses",
+        "n": 1,
+        "base": 12
+      },
+      {
+        "key": "Irregular Income",
+        "label": "Irregular Income",
+        "n": 1,
+        "base": 12
+      },
+      {
+        "key": "Travel",
+        "label": "Travel",
+        "n": 1,
+        "base": 12
+      }
+    ],
+    "future": [
+      {
+        "key": "Job Loss",
+        "label": "Job Loss",
+        "n": 10,
+        "base": 21
+      },
+      {
+        "key": "Financial Emergency",
+        "label": "Financial Emergency",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Poor Returns",
+        "label": "Poor Returns",
+        "n": 7,
+        "base": 21
+      },
+      {
+        "key": "Income Reduction",
+        "label": "Income Reduction",
+        "n": 4,
+        "base": 21
+      },
+      {
+        "key": "Better Investment Opportunity",
+        "label": "Better Investment Opportunity",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "Market Crash",
+        "label": "Market Crash",
+        "n": 2,
+        "base": 21
+      },
+      {
+        "key": "Family Responsibilities",
+        "label": "Family Responsibilities",
+        "n": 2,
+        "base": 21
+      },
+      {
+        "key": "Lack of Confidence",
+        "label": "Lack of Confidence",
+        "n": 1,
+        "base": 21
+      }
+    ],
+    "future_cash": 15,
+    "future_market": 8,
+    "likelihood": [
+      {
+        "key": "5",
+        "label": "5 of 5",
+        "n": 13,
+        "base": 21
+      },
+      {
+        "key": "4",
+        "label": "4 of 5",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "3",
+        "label": "3 of 5",
+        "n": 3,
+        "base": 21
+      },
+      {
+        "key": "2",
+        "label": "2 of 5",
+        "n": 1,
+        "base": 21
+      },
+      {
+        "key": "1",
+        "label": "1 of 5",
+        "n": 1,
+        "base": 21
+      }
+    ],
+    "keep_going": [
+      {
+        "key": "Long-Term Financial Goals",
+        "label": "Long-Term Financial Goals",
+        "n": 13,
+        "base": 21
+      },
+      {
+        "key": "Building Wealth",
+        "label": "Building Wealth",
+        "n": 12,
+        "base": 21
+      },
+      {
+        "key": "Financial Discipline",
+        "label": "Financial Discipline",
+        "n": 5,
+        "base": 21
+      },
+      {
+        "key": "Trust in SIP Investing",
+        "label": "Trust in SIP Investing",
+        "n": 2,
+        "base": 21
+      },
+      {
+        "key": "not investing now",
+        "label": "not investing now",
+        "n": 1,
+        "base": 21
+      },
+      {
+        "key": "Stable Income",
+        "label": "Stable Income",
+        "n": 1,
+        "base": 21
+      },
+      {
+        "key": "Positive Past Experience",
+        "label": "Positive Past Experience",
+        "n": 1,
+        "base": 21
+      }
+    ]
+  }
+}

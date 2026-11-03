@@ -1,0 +1,14 @@
+{
+  "run_at": "2026-11-02T14:38:14+00:00",
+  "source": "SIP Investor Behavior Survey.csv",
+  "responses": 23,
+  "sip_investors": 21,
+  "questions_kept": 30,
+  "columns_dropped": [
+    "Q31. Would you be willing to participate in a 15-minute follow-up discussion?",
+    "Q32. Name (Optional)",
+    "Q33. Email Address (Optional)",
+    "Timestamp"
+  ],
+  "personal_data_replaced_in_free_text": {}
+}

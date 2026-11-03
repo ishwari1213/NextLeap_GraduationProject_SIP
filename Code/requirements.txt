@@ -1,0 +1,21 @@
+# Phase 1: data loading
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+PyYAML>=6.0
+google-play-scraper>=1.2.7
+python-dotenv>=1.0
+pypdf>=4.0          # only needed for the two Kotak PDFs in Data/uploads/
+
+# Phases 2-4: chunking, embedding, vector store
+transformers>=4.40
+sentence-transformers>=3.0
+numpy>=1.26
+chromadb>=1.0
+
+# Phase 5: retrieval API
+fastapi>=0.115
+uvicorn>=0.30
+
+# Tests
+pytest>=8.0

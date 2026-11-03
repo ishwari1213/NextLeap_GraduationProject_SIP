@@ -1,0 +1,67 @@
+# --- Secrets ------------------------------------------------------------------------------
+# API keys live in Code/.env and must never be committed. A key-free template may be shared.
+.env
+.env.*
+!.env.example
+
+# The raw investor survey holds respondents' names and emails; only the de-identified
+# Data/survey/responses.jsonl (written by python -m src.survey.load) may be shared.
+Docs/SIP Investor Behavior Survey.csv/
+
+# --- Generated pipeline data (rebuild with the phase commands in Docs/architecture.md) ------
+# Folders stay (their .gitkeep files are kept); the files the phases write inside them do not.
+# Data/raw/ also holds original post text, which can still contain phone numbers or emails
+# from public posts: personal data is only stripped in Data/cleaned/.
+Data/raw/**
+!Data/raw/**/
+!Data/raw/**/.gitkeep
+
+Data/uploads/**
+!Data/uploads/**/
+!Data/uploads/**/.gitkeep
+
+Data/cleaned/**
+!Data/cleaned/**/
+!Data/cleaned/**/.gitkeep
+
+Data/chunks/**
+!Data/chunks/**/
+!Data/chunks/**/.gitkeep
+
+Data/embeddings/**
+!Data/embeddings/**/
+!Data/embeddings/**/.gitkeep
+
+Data/vector_db/**
+!Data/vector_db/**/
+!Data/vector_db/**/.gitkeep
+
+Data/eval/reports/**
+!Data/eval/reports/**/
+!Data/eval/reports/**/.gitkeep
+
+# Kept on purpose: Data/sources/sources.yaml (the ingestion URL list),
+# Data/eval/golden_set.jsonl (hand-checked test questions) and Data/site/ (page data).
+
+# Temporary files from atomic writes
+*.part
+
+# --- Python ---------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+
+# --- Logs, editors and OS files ---------------------------------------------------------------
+*.log
+.vscode/
+.idea/
+.claude/settings.local.json
+Thumbs.db
+desktop.ini
+.DS_Store

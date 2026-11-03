@@ -1,0 +1,20 @@
+{"id": "g01", "question": "What leads investors to pause, reduce or stop a SIP?", "expected_section": "failure-modes", "relevant_if": {"event": ["stopped", "paused", "reduced", "considering_stopping"], "failure_mode": "any"}, "out_of_scope": false}
+{"id": "g02", "question": "Why do SIP instalments fail even after money is debited?", "expected_section": "failure-modes", "relevant_if": {"failure_mode": ["instalment_failed", "debited_after_cancel_or_twice"]}, "out_of_scope": false}
+{"id": "g03", "question": "Why do people start a SIP, and what do they expect to happen?", "expected_section": "expectations", "relevant_if": {"expectation": "any", "theme": ["goals_and_motivation"]}, "out_of_scope": false}
+{"id": "g04", "question": "What changes in investor behaviour in the months after starting a SIP?", "expected_section": "stages", "relevant_if": {"stage": "any"}, "out_of_scope": false}
+{"id": "g05", "question": "What do investors check, and how often, once they have started?", "expected_section": "checking", "relevant_if": {"checking": "any"}, "out_of_scope": false}
+{"id": "g06", "question": "What confuses or worries investors inside the app?", "expected_section": "confusion", "relevant_if": {"confusion": "any"}, "out_of_scope": false}
+{"id": "g07", "question": "Where do investors go when they are unsure?", "expected_section": "outside-the-app", "relevant_if": {"help_seeking": "any"}, "out_of_scope": false}
+{"id": "g08", "question": "What separates investors who continue from those who quietly drop off?", "expected_section": "continuers", "relevant_if": {"event": ["continued", "stopped", "paused", "reduced", "considering_stopping"]}, "out_of_scope": false}
+{"id": "g09", "question": "How do SIP patterns differ across user segments like age, income and residency?", "expected_section": "segments", "relevant_if": {"age": "any", "income": "any", "residency": "any", "money_source": "any", "influence": "any"}, "out_of_scope": false}
+{"id": "g10", "question": "How do first-time investors differ from experienced ones?", "expected_section": "first-time", "relevant_if": {"experience": "any"}, "out_of_scope": false}
+{"id": "g11", "question": "Which opportunity should we solve first, and why?", "expected_section": "opportunities", "relevant_if": {"failure_mode": "any"}, "out_of_scope": false}
+{"id": "g12", "question": "What unmet needs emerge consistently across conversations?", "expected_section": "opportunities", "relevant_if": {"failure_mode": "any"}, "out_of_scope": false}
+{"id": "g13", "question": "Do market falls and losses make investors stop their SIPs?", "expected_section": "triggers", "relevant_if": {"failure_mode": ["losses_shake_confidence"], "trigger": ["market_fall_or_losses"]}, "out_of_scope": false}
+{"id": "g14", "question": "Why can't investors easily pause or change their SIP amount?", "expected_section": "failure-modes", "relevant_if": {"failure_mode": ["cannot_pause_or_change_amount", "amount_too_high"], "theme": ["sip_controls"]}, "out_of_scope": false}
+{"id": "g15", "question": "What problems do investors face with SIP autopay mandates?", "expected_section": "failure-modes", "relevant_if": {"failure_mode": ["instalment_failed", "debited_after_cancel_or_twice"], "theme": ["payments_and_mandates"]}, "out_of_scope": false}
+{"id": "g16", "question": "Why are SIP returns and P&L confusing in investment apps?", "expected_section": "confusion", "relevant_if": {"failure_mode": ["confusing_returns_or_progress"], "confusion": ["returns_or_pnl"], "theme": ["returns_and_progress"]}, "out_of_scope": false}
+{"id": "g17", "question": "Which is the safest SIP to invest in?", "expected_section": null, "relevant_if": {}, "out_of_scope": true}
+{"id": "g18", "question": "Should I stop my SIP now?", "expected_section": null, "relevant_if": {}, "out_of_scope": true}
+{"id": "g19", "question": "How much will 5000 a month become in 10 years?", "expected_section": null, "relevant_if": {}, "out_of_scope": true}
+{"id": "g20", "question": "What is the capital of France?", "expected_section": null, "relevant_if": {}, "out_of_scope": true}
