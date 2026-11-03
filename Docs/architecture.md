@@ -48,6 +48,7 @@ Three top-level folders keep documents, data and code apart. Code never stores d
 
 ```
 NextLeap_GraduationProject_SIP/
+├── requirements.txt                   Python dependencies (pip install -r requirements.txt)
 ├── Docs/                              documents only
 │   ├── GraduationPrject_Probelm statment.docx
 │   ├── sip_discovery_engine_prd.md
@@ -111,7 +112,6 @@ NextLeap_GraduationProject_SIP/
     ├── .streamlit/config.toml         theme (teal #0b6e69, off-white #f5f3ee) and port 8502
     ├── tests/                         unit tests per phase, site tests, the golden-set test
     ├── pytest.ini
-    ├── requirements.txt
     ├── .env                           API keys (never committed; see /.gitignore)
     └── .env.example                   MISTRAL_API_KEY, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, YOUTUBE_API_KEY
 ```
