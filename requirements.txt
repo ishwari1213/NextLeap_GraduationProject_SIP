@@ -5,6 +5,7 @@ lxml>=5.0
 PyYAML>=6.0
 google-play-scraper>=1.2.7
 python-dotenv>=1.0
+streamlit>=1.40.0
 pypdf>=4.0          # only needed for the two Kotak PDFs in Data/uploads/
 
 # Phases 2-4: chunking, embedding, vector store
