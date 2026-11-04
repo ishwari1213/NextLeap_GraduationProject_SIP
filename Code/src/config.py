@@ -67,6 +67,12 @@ MODEL_MAX_TOKENS = 256            # word pieces the model reads, [CLS] and [SEP]
 EMBEDDING_DIM = 384
 EMBEDDING_DEVICE = "cpu"
 EMBEDDING_BATCH_SIZE = 64
+# How question vectors are made. "torch" (sentence-transformers) everywhere by default. A small
+# deployment (Render's 512 MB plan) sets EMBEDDING_BACKEND=onnx: the same model and revision run
+# with onnxruntime, without loading PyTorch. Only for questions; the corpus vectors come from phase 3.
+EMBEDDING_BACKEND = (os.getenv("EMBEDDING_BACKEND") or ("onnx" if os.getenv("RENDER") else "torch")).strip().lower()
+EMBEDDING_MODEL_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"  # the revision phase 3 used
+ONNX_MODEL_DIR = DATA_DIR / "models" / "all-MiniLM-L6-v2-onnx"         # downloaded at build time
 
 # --- Phase 2: chunking ---------------------------------------------------------------------
 CHUNKS_FILE = CHUNKS_DIR / "chunks.jsonl"

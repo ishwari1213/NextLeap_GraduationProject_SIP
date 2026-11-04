@@ -56,9 +56,18 @@ UNAVAILABLE = ("The evidence store is not part of this deployment, so questions 
                "set API_BASE_URL to a running retrieval API.")
 
 
+IN_APP_NOTE = ("Questions are answered inside this app. The first one after a restart loads the search model, "
+               "about 10 to 20 seconds.")
+
+
 def local_store_ready() -> bool:
     """True when the phase 4 vector store is on this machine, so questions can run in-process."""
     return (config.VECTOR_DB_DIR / "chroma.sqlite3").exists()
+
+
+def in_app() -> bool:
+    """True on a deployment that answers questions inside the site, with no separate API (Render)."""
+    return config.EMBEDDING_BACKEND == "onnx"
 
 
 @st.cache_resource(show_spinner="Loading the search model (first question only)...")

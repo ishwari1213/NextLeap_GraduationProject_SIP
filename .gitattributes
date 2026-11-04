@@ -1,0 +1,4 @@
+# The committed phase 3 vectors are binary: never convert line endings or diff them as text.
+*.npy binary
+# The Render build script runs on Linux.
+*.sh text eol=lf

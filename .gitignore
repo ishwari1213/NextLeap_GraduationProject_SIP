@@ -32,6 +32,13 @@ Data/embeddings/**
 !Data/embeddings/**/
 !Data/embeddings/**/.gitkeep
 
+# Kept so a deployment (Render) can rebuild the phase 4 vector store without the model:
+# the de-identified excerpts, their phase 3 vectors, and the fetch date (counts only).
+!Data/chunks/chunks.jsonl
+!Data/embeddings/vectors.npy
+!Data/embeddings/keys.json
+!Data/cleaned/load_report.json
+
 Data/vector_db/**
 !Data/vector_db/**/
 !Data/vector_db/**/.gitkeep
@@ -39,6 +46,10 @@ Data/vector_db/**
 Data/eval/reports/**
 !Data/eval/reports/**/
 !Data/eval/reports/**/.gitkeep
+
+# The ONNX copy of the embedding model (86 MB), downloaded at build time by
+# python -m src.phase3_embedding.onnx_model
+Data/models/
 
 # Kept on purpose: Data/sources/sources.yaml (the ingestion URL list),
 # Data/eval/golden_set.jsonl (hand-checked test questions) and Data/site/ (page data).

@@ -15,13 +15,18 @@ log = logging.getLogger(__name__)
 
 
 class Embedder:
-    def __init__(self, model_name: str | None = None, device: str | None = None, batch_size: int | None = None):
+    def __init__(self, model_name: str | None = None, device: str | None = None, batch_size: int | None = None,
+                 backend: str | None = None):
         self.model_name = model_name or config.EMBEDDING_MODEL
         self.device = device or config.EMBEDDING_DEVICE
         self.batch_size = batch_size or config.EMBEDDING_BATCH_SIZE
+        self.backend = backend or config.EMBEDDING_BACKEND
         self._model = None
 
     def _load(self):
+        if self.backend == "onnx":  # same model without PyTorch, for a small deployment (onnx_model.py)
+            from src.phase3_embedding.onnx_model import OnnxMiniLM
+            return OnnxMiniLM()
         from sentence_transformers import SentenceTransformer
         from transformers.utils import logging as hf_logging
 

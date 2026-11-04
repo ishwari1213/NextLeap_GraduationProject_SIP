@@ -64,6 +64,8 @@ def _status_line(status: dict | None) -> None:
                    f"{status.get('last_updated_from_sources') or 'unknown'}.")
     elif not client.local_store_ready():
         st.warning(client.UNAVAILABLE, icon="⚠️")
+    elif client.in_app():
+        st.caption(client.IN_APP_NOTE)
     else:
         st.warning("The retrieval API on port 8001 is not running, so questions are answered in-process (the first "
                    "one loads the search model, about 10 seconds). To start it, run from the Code folder: "
@@ -84,7 +86,8 @@ def _result(result: dict, how: str, seconds: float) -> None:
                            else f"{n} of {result.get('evidence_needed', 15)} supporting posts needed")),
         ("Supporting posts", f"{n}" if status != "out_of_scope" else "–", "distinct posts above the relevance cut-off"),
         ("Routed to", route, "page section the answer draws on"),
-        ("Time", f"{seconds:.1f} s", "via the API" if how == "api" else "in-process (API not running)"),
+        ("Time", f"{seconds:.1f} s", "via the API" if how == "api"
+         else "in this app" if client.in_app() else "in-process (API not running)"),
     ])
 
     if status == "out_of_scope":

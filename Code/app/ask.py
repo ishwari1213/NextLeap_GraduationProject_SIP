@@ -11,7 +11,7 @@ from html import escape
 
 import streamlit as st
 
-from research_client import ALL_SOURCES, BADGES, QUOTE_WORDS, REFUSALS, SAMPLE_QUESTIONS, query
+from research_client import ALL_SOURCES, BADGES, QUOTE_WORDS, REFUSALS, SAMPLE_QUESTIONS, in_app, query
 from site_data import SOURCE_LABELS, SiteData, month_label
 from src import config
 
@@ -114,7 +114,8 @@ def _show_result(bundle: dict, how: str) -> None:
             st.caption("Context for definitions only, never counted as evidence.")
     st.caption(f"Answer written by Mistral from the evidence only, checked for unsupported numbers and quotes. "
                f"Last updated from sources: {bundle.get('last_updated') or 'unknown'}."
-               + (" Answered in-process because the API on port 8001 is not running." if how == "local" else ""))
+               + (" Answered in-process because the API on port 8001 is not running."
+                  if how == "local" and not in_app() else ""))
 
 
 def sidebar(site: SiteData, full_view=None) -> None:

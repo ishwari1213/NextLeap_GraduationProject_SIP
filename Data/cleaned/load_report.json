@@ -1,0 +1,57 @@
+{
+  "run_at": "2026-11-01T16:47:34+00:00",
+  "quick_mode": false,
+  "fetch": {
+    "play_store": {
+      "items": 18805,
+      "file": "Data/raw/play_store/2026-11-01.jsonl"
+    }
+  },
+  "records_file": "Data/cleaned/records.jsonl",
+  "records": {
+    "total": 18515,
+    "by_source": {
+      "play_store": 14485,
+      "app_store": 45,
+      "forums": 3242,
+      "reddit": 720,
+      "team_bhp": 15,
+      "info_pages": 8
+    },
+    "by_doc_type": {
+      "review": 14530,
+      "comment": 3867,
+      "post": 110,
+      "info_page": 8
+    },
+    "raw_items": {
+      "play_store": 18805,
+      "app_store": 45,
+      "forums": 3289,
+      "reddit": 774,
+      "team_bhp": 1,
+      "info_pages": 8
+    },
+    "duplicates": {
+      "play_store": 4320,
+      "forums": 26,
+      "reddit": 13
+    },
+    "empty": {
+      "forums": 21
+    }
+  },
+  "pii_replacements": {
+    "USER": 1063,
+    "ACCOUNT": 120,
+    "EMAIL": 10,
+    "PROFILE_LINK": 10,
+    "AADHAAR": 1,
+    "PHONE": 1
+  },
+  "dropped": {
+    "x": [
+      "https://x.com/search?q=groww%20sip&f=live"
+    ]
+  }
+}
