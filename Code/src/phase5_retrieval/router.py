@@ -34,6 +34,15 @@ class Router:
     def available(self) -> bool:
         return self.collection is not None and self.collection.count() > 0
 
+    def fixed(self, section_id: str) -> tuple[dict | None, dict | None]:
+        """(route, section_data) for a section the caller chose, such as the "Break down by segment"
+        follow-up, which must be answered from the Segments section whatever its wording."""
+        entry = self.entries.get(section_id)
+        if not entry:
+            return None, None
+        return {"page": entry.get("page"), "section": section_id, "title": entry.get("title") or section_id,
+                "score": None, "chosen": True}, entry
+
     def route(self, vector: np.ndarray) -> tuple[dict | None, dict | None]:
         """(route, section_data) for the nearest section, or (None, None) when there are no sections."""
         if not self.available:

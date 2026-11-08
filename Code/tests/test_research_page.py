@@ -15,8 +15,8 @@ from views import research
 
 CALLS = st.session_state.setdefault("calls", [])
 
-def fake_query(question, app=None, source=None, mode="answer"):
-    CALLS.append({{"question": question, "app": app, "source": source, "mode": mode}})
+def fake_query(question, app=None, source=None, mode="answer", section=None):
+    CALLS.append({{"question": question, "app": app, "source": source, "mode": mode, "section": section}})
     if "safest" in question.lower():
         return {{"question": question, "status": "out_of_scope", "reason": "investment_advice", "supporting_items": 0,
                 "decline_links": [{{"label": "AMFI", "url": "https://www.amfiindia.com/investor"}}],
@@ -71,13 +71,31 @@ def test_sample_question_shows_answer_route_and_evidence(app):
     assert at.session_state["calls"][-1]["mode"] == "answer"
 
 
+def test_answer_comes_first_and_research_detail_is_collapsed(app):
+    at = next(b for b in app.button if b.label.startswith("What leads investors")).click().run()
+    panel = next(e for e in at.expander if e.label == "Evidence and confidence")
+    assert not panel.proto.expanded  # the detail is one click away, not in front of the answer
+    assert any("Source: Drop-offs → Failure modes" in c.value and "Last updated from sources" in c.value
+               for c in at.caption)
+
+
+def test_segment_follow_up_asks_the_segments_section(app):
+    at = next(b for b in app.button if b.label.startswith("What leads investors")).click().run()
+    at = next(b for b in at.button if b.label == "Break down by segment").click().run()
+    call = at.session_state["calls"][-1]
+    assert call["section"] == "segments" and call["question"].startswith("How does this differ by investor segment")
+    at = next(b for b in at.button if b.label == "Break down by segment").click().run()
+    assert at.session_state["calls"][-1]["question"].count("How does this differ") == 1  # never prefixed twice
+
+
 def test_evidence_only_mode_and_filters_reach_the_client(app):
     app.radio[0].set_value("Evidence only")
     app.selectbox[1].set_value("Reddit")
     app.text_area[0].input("Why do SIP mandates fail?")
     at = next(b for b in app.button if b.label == "Ask").click().run()
     call = at.session_state["calls"][-1]
-    assert call == {"question": "Why do SIP mandates fail?", "app": None, "source": "reddit", "mode": "evidence"}
+    assert call == {"question": "Why do SIP mandates fail?", "app": None, "source": "reddit", "mode": "evidence",
+                    "section": None}
     assert len(at.dataframe[0].value) == 8
     assert any("Evidence only" in c.value for c in at.caption)
 

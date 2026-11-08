@@ -105,6 +105,52 @@ def test_confidence_is_capped_by_evidence(monkeypatch):
     assert generate.answer(bundle(supporting_items=8))["confidence"] == "Medium"
 
 
+def test_nested_answers_become_plain_text(monkeypatch):
+    """The "Break down by segment" crash: the model returned the answer as a nested object."""
+    nested = {"answer": {"segment_differences": {"first_time": "First-time investors report failed instalments",
+                                                  "experienced": ["Experienced investors mention charges."]}},
+              "quote_ids": [1, "E2"], "confidence": "high", "confidence_reason": {"why": "Several posts agree"}}
+    monkeypatch.setattr(generate, "chat_json", lambda *a, **k: nested)
+    a = generate.answer(bundle())
+    assert a["guardrail"]["passed"] and isinstance(a["text"], str)
+    assert a["text"] == "First-time investors report failed instalments. Experienced investors mention charges."
+    assert [q["chunk_id"] for q in a["quotes"]] == ["c1", "c2"] and a["confidence"] == "High"
+    assert a["confidence_reason"] == "Several posts agree."
+
+
+def test_answer_never_raises_on_an_unexpected_reply(monkeypatch):
+    for reply in (["not", "a", "dict"], None, {"answer": 42}, {"quote_ids": "E1"}):
+        monkeypatch.setattr(generate, "chat_json", lambda *a, r=reply, **k: r)
+        a = generate.answer(bundle())
+        assert isinstance(a["text"], str) and a["text"]
+
+    def boom(*a, **k):
+        raise KeyError("unexpected")
+    monkeypatch.setattr(generate, "chat_json", boom)
+    assert generate.answer(bundle())["guardrail"]["fallback"]
+
+
+def test_counts_are_dropped_unless_the_question_asks_how_many():
+    text = "Instalments fail (451 posts) and support is slow (45 problem posts)."
+    assert generate.drop_counts(text, "Why do SIPs fail?") == "Instalments fail and support is slow."
+    assert generate.drop_counts(text, "How many posts mention failed instalments?") == text
+    assert generate.drop_counts("Started in 2024 (n = 20).", "Why?") == "Started in 2024."
+    assert generate.drop_counts("First-time investors (97) differ (2024).", "Why?") == "First-time investors differ (2024)."
+
+
+def test_numbers_in_section_labels_count_as_evidence():
+    b = bundle(section_data={"key_numbers": {"25 to 44 (age): posts": 88}})
+    assert generate.check({"answer": "Investors aged 25 to 44 mention failures.", "quote_ids": ["E1"]}, b) == []
+    assert generate.check({"answer": "Segment 7 differs.", "quote_ids": ["E1"]}, b)  # an invented number still fails
+
+
+def test_segment_questions_get_the_segment_instruction():
+    seg = generate._messages(bundle(route={"section": "segments"}))[1]["content"]
+    other = generate._messages(bundle(route={"section": "failure-modes"}))[1]["content"]
+    assert "Do not treat journey stages as segments" in seg and "journey stages" not in other
+    assert "ONE plain-text string" in other
+
+
 def test_out_of_scope_never_calls_the_model(monkeypatch):
     monkeypatch.setattr(generate, "chat_json", lambda *a, **k: pytest.fail("model called"))
     a = generate.answer(bundle(status="out_of_scope", reason="investment_advice", decline_links=config.OFFICIAL_LINKS))

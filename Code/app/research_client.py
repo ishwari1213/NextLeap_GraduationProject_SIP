@@ -86,11 +86,21 @@ def api_status() -> dict | None:
         return None
 
 
+SEGMENT_PREFIX = "How does this differ by investor segment (first-time or experienced, income, age)? "
+
+
+def segment_question(question: str) -> str:
+    """The "Break down by segment" follow-up for a question (never prefixed twice)."""
+    return SEGMENT_PREFIX + (question or "").removeprefix(SEGMENT_PREFIX)
+
+
 def query(question: str, *, app: str | None = None, source: str | None = None,
-          mode: str = "answer") -> tuple[dict, str]:
+          mode: str = "answer", section: str | None = None) -> tuple[dict, str]:
     """(result, how): the evidence bundle (with `answer` in answer mode), and 'api' or 'local'.
+    `section` answers from that page section (the segment follow-up uses "segments").
     With neither the API nor a local vector store: status 'unavailable' and how ''."""
-    payload = {"question": question, **({"app": app} if app else {}), **({"source": source} if source else {})}
+    payload = {"question": question, **({"app": app} if app else {}), **({"source": source} if source else {}),
+               **({"section": section} if section else {})}
     endpoint = "/api/ask" if mode == "answer" else "/api/retrieve"
     try:
         resp = requests.post(f"{config.API_BASE_URL}{endpoint}", json=payload, timeout=(2, 120))
@@ -103,7 +113,7 @@ def query(question: str, *, app: str | None = None, source: str | None = None,
     if not local_store_ready():
         return {"status": "unavailable", "detail": UNAVAILABLE}, ""
     try:
-        bundle = _local_retriever().retrieve(question, app=app, source=source)
+        bundle = _local_retriever().retrieve(question, app=app, source=source, section=section)
     except Exception as exc:  # a damaged or partial store: say so instead of crashing the page
         return {"status": "unavailable", "detail": f"The local evidence store could not be searched ({exc})."}, ""
     if mode == "answer":

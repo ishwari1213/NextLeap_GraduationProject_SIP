@@ -61,11 +61,8 @@ def render(site: SiteData) -> None:
     if not site.ready:
         ui.not_ready(site.missing)
         return
-    n_sources = len(site.active_sources)
-    ui.page_header("06 · Method",
-                   f"{n_sources} public sources were cleaned, de-identified, chunked and embedded into "
-                   f"{site.excerpts_total:,} searchable excerpts, and the limits are stated",
-                   "How does the workflow gather and prepare data, and what are its limits?")
+    ui.page_header("06 · Method", "How the engine was built, and its limits",
+                   "On this page: sources, pipeline, scoring method, settings, limits and privacy.")
     ui.stat_tiles([
         ("Records", f"{site.records_total:,}", "after removing duplicates and empty posts"),
         ("Excerpts", f"{site.excerpts_total:,}", f"each at most {site.chunk_settings.get('model_max_tokens', '')} tokens"),
@@ -84,18 +81,18 @@ def render(site: SiteData) -> None:
         ("Retrieve", f"top {config.RETRIEVAL_CANDIDATES} matches, cut-off {config.RETRIEVAL_MIN_SIMILARITY}"),
     ])
 
-    ui.heading("Records and excerpts by source")
+    ui.heading("Data by source")
     st.altair_chart(_chart(site), width="stretch")
     st.dataframe(pd.DataFrame([{"Source": s.label, "URLs listed": s.urls_active, "Records": s.records,
                                 "Excerpts": s.excerpts, "Long posts split": s.records_split, "Note": s.note}
                                for s in site.sources]), hide_index=True, width="stretch")
 
-    ui.heading("App-store reviews by app")
+    ui.heading("Reviews by app")
     st.dataframe(pd.DataFrame([{"App": a.app, "Store": "Google Play" if a.source == "play_store" else "App Store",
                                 "Reviews": a.reviews, "From": a.first, "To": a.last} for a in site.apps]),
                  hide_index=True, width="stretch")
 
-    ui.heading("Settings")
+    ui.heading("Model settings")
     s = site.chunk_settings
     ui.card(f"<b>Embedding model:</b> {site.model} ({site.dim} dimensions)<br>"
             f"<b>Chunking:</b> excerpts of about {s.get('target_tokens')} tokens, {s.get('overlap_tokens')} tokens of "
@@ -120,12 +117,13 @@ def render(site: SiteData) -> None:
 
     ui.insights(limits(site), title="Limits")
 
-    ui.heading("Not yet computed")
-    remaining = [("Engine vs human agreement", "fill in Data/eval/human_labels.csv, then run the agreement score")]
-    if (survey_part := (site.pages.get("overview") or {}).get("survey") or {}).get("status") != "computed":
-        remaining.insert(0, ("Survey findings", "load the investor survey: python -m src.survey.load"))
-    st.dataframe(pd.DataFrame([{"Item": t, "Missing step": s} for t, s in remaining]), hide_index=True,
-                 width="stretch")
+    remaining = []
+    if ((site.pages.get("overview") or {}).get("survey") or {}).get("status") != "computed":
+        remaining.append(("Survey findings", "load the investor survey: python -m src.survey.load"))
+    if remaining:  # shown only while something is pending
+        ui.heading("Still to do")
+        st.dataframe(pd.DataFrame([{"Item": t, "Missing step": s} for t, s in remaining]), hide_index=True,
+                     width="stretch")
 
     ui.heading("Privacy and rules")
     ui.card("No usernames or author fields are stored, not even in the raw downloads. Personal details in post "

@@ -248,6 +248,22 @@ def build(records: list[dict], tags: dict[str, dict], reports: dict) -> dict[str
                        "expectations": dist(first_time, "expectation")["rows"][:3]},
         "survey": survey_part("segments", "Survey-based patterns (The Watcher, The Quiet Checker, The Cash-Squeezed)."),
     }
+    # numbers per group, so segment questions (and the "Break down by segment" follow-up) are
+    # answered from real group counts, not from stage counts
+    segment_numbers = {"posts stating a segment": any_segment}
+    for r in seg_rows:
+        if r["sample"] == "ok":
+            group = f"{r['group']} ({r['segment'].lower()})"
+            segment_numbers[group] = r["n"]
+            segment_numbers[f"{group} stating a problem"] = r["with_problem"]
+    experienced = next((r for r in seg_rows if r["group"].lower() == "experienced"), None)
+    first_time_numbers = {"first-time posts": len(first_time),
+                          "first-time posts with no problem": segments["first_time"]["no_problem"],
+                          **{f"first-time posts about {r['label'].lower()}": r["n"]
+                             for r in segments["first_time"]["failure_modes"]}}
+    if experienced:
+        first_time_numbers.update({"experienced-investor posts": experienced["n"],
+                                   "experienced-investor posts stating a problem": experienced["with_problem"]})
 
     # ---- validation and method (tagging, scoring, retrieval evaluation) ----------------------
     tag_report = reports.get("tags") or {}
@@ -318,10 +334,10 @@ def build(records: list[dict], tags: dict[str, dict], reports: dict) -> dict[str
          {"continued": len(cont), "dropped": len(drop)}),
         ("Segments", "segments", "Patterns by segment",
          "How do patterns differ across user segments: income stability, age, source of money, who influenced "
-         "them, residency, NRI, students, salaried?", {"posts stating a segment": any_segment}),
+         "them, residency, NRI, students, salaried?", segment_numbers),
         ("Segments", "first-time", "First-time investors",
          "What is specific to first-time investors? How do first-time investors differ from experienced ones?",
-         {"first-time posts": len(first_time)}),
+         first_time_numbers),
         ("Validation", "quality", "How quality was checked",
          "How was the quality of the insights validated? Where did the engine fail?", {}),
         ("Method", "pipeline", "How it was built",

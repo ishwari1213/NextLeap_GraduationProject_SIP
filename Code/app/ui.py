@@ -61,9 +61,11 @@ def banner() -> None:
         "amounts or actions.</div>", unsafe_allow_html=True)
 
 
-def page_header(tag: str, title: str, answers: str) -> None:
+def page_header(tag: str, title: str, lead: str) -> None:
+    """Section tag, a short message title (no research numbers: they live in the tiles and
+    charts below), and one plain line saying what the page holds."""
     st.markdown(f'<div class="sde-tag">{escape(tag)}</div><div class="sde-title">{escape(title)}</div>'
-                f'<div class="sde-answers">Answers: {escape(answers)}</div>', unsafe_allow_html=True)
+                f'<div class="sde-answers">{escape(lead)}</div>', unsafe_allow_html=True)
 
 
 def heading(text: str) -> None:
@@ -172,7 +174,7 @@ def quote_cards(items: list[dict]) -> None:
                 unsafe_allow_html=True)
 
 
-def survey_heading(survey: dict, title: str = "From the investor survey") -> None:
+def survey_heading(survey: dict, title: str = "What the survey adds") -> None:
     heading(title)
     st.caption(survey.get("sample", {}).get("note", ""))
 

@@ -141,7 +141,29 @@
     "text": "How do patterns differ across user segments: income stability, age, source of money, who influenced them, residency, NRI, students, salaried?",
     "about": "I am a student, salaried, self-employed, an NRI, in my twenties; I started after watching YouTube or on a friend's advice.",
     "key_numbers": {
-      "posts stating a segment: posts": 317
+      "posts stating a segment: posts": 317,
+      "Experienced (experience): posts": 160,
+      "Experienced (experience) stating a problem: posts": 74,
+      "First time (experience): posts": 97,
+      "First time (experience) stating a problem: posts": 36,
+      "Salaried (income): posts": 126,
+      "Salaried (income) stating a problem: posts": 67,
+      "Student (income): posts": 10,
+      "Student (income) stating a problem: posts": 2,
+      "25 to 44 (age): posts": 88,
+      "25 to 44 (age) stating a problem: posts": 45,
+      "Under 25 (age): posts": 18,
+      "Under 25 (age) stating a problem: posts": 3,
+      "Salary (source of money): posts": 99,
+      "Salary (source of money) stating a problem: posts": 47,
+      "Savings or bonus (source of money): posts": 20,
+      "Savings or bonus (source of money) stating a problem: posts": 9,
+      "Own research (influence): posts": 95,
+      "Own research (influence) stating a problem: posts": 24,
+      "Resident (residency): posts": 65,
+      "Resident (residency) stating a problem: posts": 27,
+      "NRI (residency): posts": 11,
+      "NRI (residency) stating a problem: posts": 2
     }
   },
   {
@@ -151,7 +173,13 @@
     "text": "What is specific to first-time investors? How do first-time investors differ from experienced ones?",
     "about": "I am a first-time investor, new to mutual funds, I just started my first SIP; I have been investing for many years.",
     "key_numbers": {
-      "first-time posts: posts": 97
+      "first-time posts: posts": 97,
+      "first-time posts with no problem: posts": 61,
+      "first-time posts about instalment failed: posts": 23,
+      "first-time posts about withdrawal problem: posts": 7,
+      "first-time posts about app bug: posts": 4,
+      "experienced-investor posts: posts": 160,
+      "experienced-investor posts stating a problem: posts": 74
     }
   },
   {

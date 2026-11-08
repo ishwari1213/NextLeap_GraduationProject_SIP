@@ -22,16 +22,15 @@ def render(site: SiteData) -> None:
     retrieval = page.get("retrieval", {"status": "not_computed", "reason": "", "missing_step": "phase 6"})
     total, failed = len(site.checks), site.checks_failed
     held_out = retrieval.get("holdout") if retrieval.get("status") == "computed" else None
-    if held_out:
-        title = (f"Retrieval finds a relevant post in the top 3 for {held_out['top3_hits']} of "
-                 f"{held_out['in_scope_items']} unseen test questions, below the 80% target; "
-                 f"{total - failed} of {total} pipeline checks pass")
-    elif retrieval.get("status") == "computed":
-        title = (f"Retrieval finds a relevant post in the top 3 for {retrieval['top3_hits']} of "
-                 f"{retrieval['in_scope_items']} test questions, and {total - failed} of {total} pipeline checks pass")
+    checks = "Pipeline checks pass" if not failed else "Some pipeline checks fail"
+    if retrieval.get("status") != "computed":
+        title = f"{checks}; search accuracy is not yet measured"
     else:
-        title = f"{total - failed} of {total} pipeline checks pass; retrieval accuracy is not yet measured"
-    ui.page_header("05 · Validation", title, "How were the data, the tags and the search checked? Where could they fail?")
+        rate = (held_out or retrieval)["top3_hit_rate"]
+        scope = "search on new questions" if held_out else "search"
+        title = f"{checks}; {scope} {'meets' if rate >= 0.8 else 'is below'} its target"
+    ui.page_header("05 · Validation", title,
+                   "On this page: search accuracy, engine vs survey, tagging quality, pipeline checks and privacy.")
 
     computed = retrieval.get("status") == "computed"
     held = retrieval.get("holdout") if computed else None
@@ -46,7 +45,7 @@ def render(site: SiteData) -> None:
         ("Personal details removed", f"{site.pii_total:,}", "replaced with labels before storage"),
     ])
 
-    ui.heading("Retrieval on the golden set")
+    ui.heading("Search accuracy")
     if retrieval.get("status") == "computed":
         st.write(f"Top-3 hit rate **{retrieval['top3_hit_rate']:.0%}** ({retrieval['top3_hits']} of "
                  f"{retrieval['in_scope_items']}); refusals **{retrieval['refusals_ok']} of {retrieval['refusal_items']}**"
@@ -68,19 +67,6 @@ def render(site: SiteData) -> None:
         } for i in items]), hide_index=True, width="stretch")
     else:
         ui.not_computed_item("Retrieval top-3 hit rate", retrieval)
-
-    ui.heading("Engine vs human agreement")
-    agreement = page.get("agreement", {"status": "not_computed"})
-    if agreement.get("status") == "computed":
-        st.write(f"Overall agreement **{agreement['overall']:.0%}** ({agreement['agree']} of {agreement['total']} "
-                 f"field values, {agreement['posts_labelled']} posts).")
-        ui.bars([{"label": f, "n": round(v["rate"] * 100) if v["rate"] is not None else 0,
-                  "sample": "low" if v["total"] < 10 else "ok"} for f, v in agreement["per_field"].items()],
-                "Agreement per field (%)", value_format="d")
-    else:
-        ui.not_computed_item("Engine vs human agreement", agreement)
-        st.caption("A 40-post labelling sheet is ready: Data/eval/human_labels.csv, with the label list in "
-                   "Data/eval/HOW_TO_LABEL.md. Fill it in, then run python -m src.phase6_retrieval_testing.agreement score.")
 
     survey = page.get("survey", {"status": "not_computed"})
     if survey.get("status") == "computed":
@@ -104,7 +90,7 @@ def render(site: SiteData) -> None:
     st.dataframe(pd.DataFrame([{"Phase": c.phase, "Check": c.name, "Value": c.value,
                                 "Result": "Pass ✓" if c.passed else "Fail ✗"} for c in site.checks]),
                  hide_index=True, width="stretch")
-    ui.heading("Personal data removed before storage")
+    ui.heading("Personal data removed")
     rows = sorted(site.pii_replacements.items(), key=lambda kv: -kv[1])
     st.dataframe(pd.DataFrame([{"Kind": PII_LABELS.get(k, k), "Replaced": v} for k, v in rows]),
                  hide_index=True, width="stretch")

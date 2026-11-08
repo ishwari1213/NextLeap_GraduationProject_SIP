@@ -1,10 +1,11 @@
 """Ask the engine: the full-page research tool (architecture phase 5, served by /api/ask and /api/retrieve).
 
 Empty state: an intro, the disclaimer and exactly 4 sample questions; no answer until the reader
-asks (UI spec section 4). A result shows the status badge, the supporting-post count, the page
-section the question was routed to, the written answer with its confidence and quotes, the two
-follow-ups ("Show quotes", "Break down by segment"), every retrieved excerpt with its match score,
-the information-page context and the evidence bundle itself.
+asks (UI spec section 4). A result shows the answer first, then one line with its source section
+and "Last updated from sources", then the two follow-ups ("Show quotes", "Break down by
+segment"). The research detail (status, supporting posts, routed section, timing, confidence,
+quotes, every retrieved excerpt, information-page context and the evidence bundle) sits in one
+"Evidence and confidence" panel: collapsed under an answer, open in "Evidence only" mode.
 """
 from __future__ import annotations
 
@@ -22,7 +23,7 @@ from src import config
 HISTORY = 8
 
 
-def _run(question: str | None = None) -> None:
+def _run(question: str | None = None, section: str | None = None) -> None:
     """Button callback: run a question with the chosen filters and keep the result."""
     question = " ".join((question or st.session_state.get("rq_input", "")).split())
     if len(question) < 3:
@@ -35,7 +36,7 @@ def _run(question: str | None = None) -> None:
     source = client.SOURCE_FILTERS.get(st.session_state.get("rq_source", ""), None)
     mode = client.MODES.get(st.session_state.get("rq_mode", ""), "answer")
     started = time.monotonic()
-    result, how = client.query(question, app=app, source=source, mode=mode)
+    result, how = client.query(question, app=app, source=source, mode=mode, section=section)
     st.session_state["rq_result"] = (result, how, round(time.monotonic() - started, 1))
     history = [q for q in st.session_state.get("rq_history", []) if q != question]
     st.session_state["rq_history"] = [question, *history][:HISTORY]
@@ -72,6 +73,52 @@ def _status_line(status: dict | None) -> None:
                    "uvicorn src.api.main:app --port 8001", icon="⚠️")
 
 
+def _evidence(result: dict, how: str, seconds: float, fallback: bool) -> None:
+    """The research detail behind an answer: status, confidence, quotes and every excerpt."""
+    status = result.get("status")
+    label, kind = client.BADGES.get(status, (status, "muted"))
+    n = result.get("supporting_items", 0)
+    ui.stat_tiles([
+        ("Status", label, f"{n} of {result.get('evidence_needed', 15)} supporting posts needed"),
+        ("Supporting posts", f"{n}", "distinct posts above the relevance cut-off"),
+        ("Routed to", result.get("page_link") or "–", "page section the answer draws on"),
+        ("Time", f"{seconds:.1f} s", "via the API" if how == "api"
+         else "in this app" if client.in_app() else "in-process (API not running)"),
+    ])
+    answer = result.get("answer") or {}
+    if answer.get("confidence"):
+        st.markdown(f'<span class="sde-pill pill-{kind}">{escape(label)}</span>&nbsp; '
+                    f'Confidence: <b>{escape(answer["confidence"])}</b>', unsafe_allow_html=True)
+        if answer.get("confidence_reason"):
+            st.caption(answer["confidence_reason"])
+    if answer.get("quotes") and not fallback:
+        st.markdown("**Quotes behind the answer**")
+        st.markdown(_quotes_html(answer["quotes"]), unsafe_allow_html=True)
+    if result.get("filters"):
+        st.caption("Filters: " + ", ".join(f"{k} = {v}" for k, v in result["filters"].items())
+                   + ". The app filter covers app-store reviews only.")
+
+    excerpts = result.get("excerpts", [])
+    st.markdown(f"**All evidence retrieved ({len(excerpts)} excerpts, best first)**")
+    if excerpts:
+        st.dataframe(pd.DataFrame([{
+            "Rank": i, "Match": round(e.get("score", 0), 2), "Source": client.source_label(e),
+            "Month": client.month(e), "Type": e.get("doc_type", ""), "Excerpt (up to 25 words)": client.short(e.get("text", "")),
+        } for i, e in enumerate(excerpts, 1)]), hide_index=True, width="stretch")
+    else:
+        st.caption("No excerpt passed the relevance cut-off.")
+    if result.get("context"):
+        st.markdown(f"**Background from SIP information pages ({len(result['context'])})**, definitions only, "
+                    "never counted as evidence")
+        st.markdown(_quotes_html(result["context"], with_score=True), unsafe_allow_html=True)
+    for note in result.get("notes", []):
+        st.caption(note)
+    st.markdown("**Evidence bundle** (what the answer step receives)")
+    st.json(client.safe_bundle(result), expanded=False)
+    st.caption("Counts are mentions in public posts, not population percentages."
+               + (" Shown as a plain evidence summary: a written answer did not pass the checks." if fallback else ""))
+
+
 def _result(result: dict, how: str, seconds: float) -> None:
     status = result.get("status")
     if status in ("invalid", "unavailable"):
@@ -79,16 +126,6 @@ def _result(result: dict, how: str, seconds: float) -> None:
         return
     label, kind = client.BADGES.get(status, (status, "muted"))
     st.markdown(f'<div class="sde-h">{escape(result.get("question", ""))}</div>', unsafe_allow_html=True)
-    route = result.get("page_link") or "–"
-    n = result.get("supporting_items", 0)
-    ui.stat_tiles([
-        ("Status", label, (client.REASONS.get(result.get("reason"), "") if status == "out_of_scope"
-                           else f"{n} of {result.get('evidence_needed', 15)} supporting posts needed")),
-        ("Supporting posts", f"{n}" if status != "out_of_scope" else "–", "distinct posts above the relevance cut-off"),
-        ("Routed to", route, "page section the answer draws on"),
-        ("Time", f"{seconds:.1f} s", "via the API" if how == "api"
-         else "in this app" if client.in_app() else "in-process (API not running)"),
-    ])
 
     if status == "out_of_scope":
         answer = result.get("answer") or {}
@@ -99,66 +136,32 @@ def _result(result: dict, how: str, seconds: float) -> None:
         return
 
     answer = result.get("answer")
+    fallback = bool(answer and (answer.get("guardrail") or {}).get("fallback"))
     if answer:
-        ui.heading("Answer")
-        st.markdown(f'<span class="sde-pill pill-{kind}">{escape(label)}</span>&nbsp; '
-                    f'{escape(answer.get("sample_size", ""))}'
-                    + (f' &nbsp;·&nbsp; Confidence: <b>{escape(answer["confidence"])}</b>' if answer.get("confidence") else ""),
-                    unsafe_allow_html=True)
         st.write(answer.get("text", ""))
-        if answer.get("confidence_reason"):
-            st.caption(answer["confidence_reason"])
-        st.markdown(_quotes_html(answer.get("quotes", [])), unsafe_allow_html=True)
-        if answer.get("page_link"):
-            st.caption(f"See: {answer['page_link']}")
-        if (answer.get("guardrail") or {}).get("fallback"):
-            st.caption("Shown as a plain evidence summary: a written answer did not pass the number and quote checks.")
+        if fallback:  # the summary introduces the posts, so show them here
+            st.markdown(_quotes_html(answer.get("quotes", [])), unsafe_allow_html=True)
+    if status == "insufficient_evidence":
+        st.info(f"Limited evidence: fewer than {result.get('evidence_needed', 15)} posts support this answer. More "
+                "data would help: a longer Play Store window, YouTube comments or the survey.", icon="ℹ️")
+    source = f"Source: {result['page_link']} · " if result.get("page_link") else ""
+    st.caption(f"{source}Last updated from sources: {result.get('last_updated') or 'unknown'}")
+    if answer:
         left, right, _ = st.columns([1, 1, 2])
         left.button("Show quotes", key="rq-fu-quotes", width="stretch",
                     on_click=lambda: st.session_state.update(rq_show_all=True))
         right.button("Break down by segment", key="rq-fu-segment", width="stretch", on_click=_run,
-                     args=(f"How does this differ by segment (age, income, first-time or experienced)? "
-                           f"{result.get('question', '')}",))
-    elif result.get("excerpts"):
+                     args=(client.segment_question(result.get("question", "")), "segments"))
+        with st.expander("Evidence and confidence", expanded=st.session_state.pop("rq_show_all", False)):
+            _evidence(result, how, seconds, fallback)
+    else:  # evidence only: the evidence is the result, so show it open
         st.caption("Evidence only: no written answer was requested.")
-
-    if status == "insufficient_evidence":
-        st.info(f"Fewer than {result.get('evidence_needed', 15)} supporting posts passed the relevance cut-off. More "
-                "data would help: a longer Play Store window, YouTube comments or the survey.", icon="ℹ️")
-    if result.get("filters"):
-        st.caption("Filters: " + ", ".join(f"{k} = {v}" for k, v in result["filters"].items())
-                   + ". The app filter covers app-store reviews only.")
-
-    excerpts = result.get("excerpts", [])
-    ui.heading(f"Evidence retrieved ({len(excerpts)} excerpts, best first)")
-    show_all = st.session_state.pop("rq_show_all", False)
-    if excerpts:
-        st.dataframe(pd.DataFrame([{
-            "Rank": i, "Match": round(e.get("score", 0), 2), "Source": client.source_label(e),
-            "Month": client.month(e), "Type": e.get("doc_type", ""), "Excerpt (up to 25 words)": client.short(e.get("text", "")),
-        } for i, e in enumerate(excerpts, 1)]), hide_index=True, width="stretch")
-        with st.expander("Read them as quotes", expanded=show_all):
-            st.markdown(_quotes_html(excerpts, with_score=True), unsafe_allow_html=True)
-    else:
-        st.caption("No excerpt passed the relevance cut-off.")
-    if result.get("context"):
-        with st.expander(f"Background from SIP information pages ({len(result['context'])})"):
-            st.markdown(_quotes_html(result["context"], with_score=True), unsafe_allow_html=True)
-            st.caption("Context for definitions only, never counted as evidence.")
-    for note in result.get("notes", []):
-        st.caption(note)
-    with st.expander("Evidence bundle (what the answer step receives)"):
-        st.json(client.safe_bundle(result), expanded=False)
-    st.caption(f"Last updated from sources: {result.get('last_updated') or 'unknown'}. Counts are mentions in public "
-               "posts, not population percentages.")
+        _evidence(result, how, seconds, fallback)
 
 
 def render(site: SiteData) -> None:
-    excerpts = f"{site.excerpts_total:,} excerpts" if site.ready else "the evidence store"
-    ui.page_header("Research tool · Ask the engine",
-                   f"Ask a question and get an answer grounded in {excerpts} from public posts and reviews",
-                   "any discovery question, answered only from the evidence, with its sample size, confidence, quotes "
-                   "and the page section it comes from.")
+    ui.page_header("Research tool", "Ask the engine",
+                   "Ask about SIP behaviour and get a short answer drawn only from public posts and reviews.")
     _status_line(client.api_status())
     st.info("Research tool, not investment advice. It does not recommend funds, calculate returns or answer "
             "questions about individuals.", icon="ℹ️")

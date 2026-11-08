@@ -3,6 +3,10 @@
 Empty state: a short intro, the disclaimer and exactly 4 sample questions; no answer is shown
 until the reader clicks one or asks their own (UI spec section 4). Questions go through the
 shared client (research_client.py): POST /api/ask on port 8001, or in-process if the API is down.
+
+A result shows the answer first, then one line with its source section and "Last updated from
+sources", then the two follow-ups. The research detail (status, supporting posts, confidence,
+quotes and every retrieved excerpt) sits in one collapsed "Evidence and confidence" panel.
 Quotes are de-identified, at most 25 words, labelled with source and month only (UI spec rule 4).
 """
 from __future__ import annotations
@@ -11,17 +15,18 @@ from html import escape
 
 import streamlit as st
 
-from research_client import ALL_SOURCES, BADGES, QUOTE_WORDS, REFUSALS, SAMPLE_QUESTIONS, in_app, query
+from research_client import (ALL_SOURCES, BADGES, QUOTE_WORDS, REFUSALS, SAMPLE_QUESTIONS, in_app, query,
+                             segment_question)
 from site_data import SOURCE_LABELS, SiteData, month_label
 from src import config
 
 
-def retrieve(question: str, app: str | None) -> tuple[dict, str]:
+def retrieve(question: str, app: str | None, section: str | None = None) -> tuple[dict, str]:
     """(bundle with `answer`, how) where how is 'api' or 'local'."""
-    return query(question, app=app, mode="answer")
+    return query(question, app=app, mode="answer", section=section)
 
 
-def submit(question: str | None = None) -> None:
+def submit(question: str | None = None, section: str | None = None) -> None:
     """Button callback: run a question and keep the result for the sidebar to show."""
     question = (question or st.session_state.get("ask_input", "")).strip()
     if len(question) < 3:
@@ -30,7 +35,7 @@ def submit(question: str | None = None) -> None:
     app = st.session_state.get("ask_app")
     app = None if app in (None, ALL_SOURCES) else app
     st.session_state["ask_input"] = question
-    st.session_state["ask_result"] = retrieve(question, app)
+    st.session_state["ask_result"] = retrieve(question, app, section)
 
 
 def clear() -> None:
@@ -61,6 +66,13 @@ def _answer_quote_html(q: dict) -> str:
     return f'<div class="sde-quote">“{escape(q.get("text", ""))}”<span class="meta">{escape(meta)}</span></div>'
 
 
+def _source_line(bundle: dict, how: str) -> str:
+    parts = [f"Source: {bundle['page_link']}"] if bundle.get("page_link") else []
+    parts.append(f"Last updated from sources: {bundle.get('last_updated') or 'unknown'}")
+    line = " · ".join(parts)
+    return line + (" · answered in-process (API on port 8001 not running)" if how == "local" and not in_app() else "")
+
+
 def _show_result(bundle: dict, how: str) -> None:
     status = bundle.get("status")
     if status in ("invalid", "unavailable"):
@@ -68,61 +80,56 @@ def _show_result(bundle: dict, how: str) -> None:
         return
     st.markdown(f"**{escape(bundle.get('question', ''))}**")
     label, kind = BADGES.get(status, (status, "muted"))
-    n = bundle.get("supporting_items", 0)
-    st.markdown(f'<span class="sde-pill pill-{kind}">{escape(label)}</span>'
-                + (f'&nbsp; n = {n} supporting posts' if status != "out_of_scope" else ""),
-                unsafe_allow_html=True)
-
     ans = bundle.get("answer")
     if status == "out_of_scope":
+        st.markdown(f'<span class="sde-pill pill-{kind}">{escape(label)}</span>', unsafe_allow_html=True)
         st.write(ans["text"] if ans else REFUSALS.get(bundle.get("reason"), "This question is out of scope."))
         for link in bundle.get("decline_links", []):
             st.markdown(f"- [{link['label']}]({link['url']})")
         return
 
+    fallback = bool(ans and (ans.get("guardrail") or {}).get("fallback"))
     if ans:
         st.write(ans["text"])
-        if ans.get("confidence"):
-            st.caption(f"Confidence: **{ans['confidence']}** · {ans.get('confidence_reason', '')}")
-        st.markdown("".join(_answer_quote_html(q) for q in ans.get("quotes", [])), unsafe_allow_html=True)
-        if ans.get("page_link"):
-            st.caption(f"See: {ans['page_link']}")
-        if ans.get("guardrail", {}).get("fallback"):
-            st.caption("Shown as a plain evidence summary: a written answer did not pass the number and quote checks.")
+        if fallback:  # the summary introduces the posts, so show them here
+            st.markdown("".join(_answer_quote_html(q) for q in ans.get("quotes", [])), unsafe_allow_html=True)
+    if status == "insufficient_evidence":
+        st.caption(f"Limited evidence: fewer than {bundle.get('evidence_needed', 15)} posts support this answer.")
+    st.caption(_source_line(bundle, how))
+    if ans:
         left, right = st.columns(2)
         left.button("Show quotes", key="fu-quotes", width="stretch",
                     on_click=lambda: st.session_state.update(ask_show_all=True))
         right.button("Break down by segment", key="fu-segment", width="stretch", on_click=submit,
-                     args=(f"How does this differ by segment (age, income, first-time or experienced)? "
-                           f"{bundle.get('question', '')}",))
-
-    if status == "insufficient_evidence":
-        st.caption(f"Fewer than {bundle.get('evidence_needed', 15)} supporting posts passed the relevance cut-off. "
-                   "More data would help: a longer Play Store window, YouTube comments or the survey.")
-    if bundle.get("filters"):
-        st.caption("Filter: " + ", ".join(f"{k} = {v}" for k, v in bundle["filters"].items())
-                   + " (app filter covers app-store reviews only)")
+                     args=(segment_question(bundle.get("question", "")), "segments"))
 
     excerpts = bundle.get("excerpts", [])
-    if not ans:
-        st.markdown("".join(_quote_html(e) for e in excerpts[:3]), unsafe_allow_html=True)
-    with st.expander(f"All evidence retrieved ({len(excerpts)})", expanded=st.session_state.pop("ask_show_all", False)):
+    with st.expander("Evidence and confidence", expanded=st.session_state.pop("ask_show_all", False)):
+        n = bundle.get("supporting_items", 0)
+        st.markdown(f'<span class="sde-pill pill-{kind}">{escape(label)}</span>&nbsp; {n} supporting posts',
+                    unsafe_allow_html=True)
+        if ans and ans.get("confidence"):
+            st.caption(f"Confidence: **{ans['confidence']}** · {ans.get('confidence_reason', '')}")
+        if ans and ans.get("quotes") and not fallback:
+            st.markdown("**Quotes behind the answer**")
+            st.markdown("".join(_answer_quote_html(q) for q in ans["quotes"]), unsafe_allow_html=True)
+        if bundle.get("filters"):
+            st.caption("Filter: " + ", ".join(f"{k} = {v}" for k, v in bundle["filters"].items())
+                       + " (app filter covers app-store reviews only)")
+        st.markdown(f"**All evidence retrieved ({len(excerpts)})**")
         st.markdown("".join(_quote_html(e) for e in excerpts), unsafe_allow_html=True)
-    if bundle.get("context"):
-        with st.expander("Background from SIP information pages"):
+        if bundle.get("context"):
+            st.markdown("**Background from SIP information pages** (definitions only, never counted as evidence)")
             st.markdown("".join(_quote_html(e) for e in bundle["context"]), unsafe_allow_html=True)
-            st.caption("Context for definitions only, never counted as evidence.")
-    st.caption(f"Answer written by Mistral from the evidence only, checked for unsupported numbers and quotes. "
-               f"Last updated from sources: {bundle.get('last_updated') or 'unknown'}."
-               + (" Answered in-process because the API on port 8001 is not running."
-                  if how == "local" and not in_app() else ""))
+        st.caption("Answer written by Mistral from the evidence only, checked for unsupported numbers and quotes."
+                   + (" Shown as a plain evidence summary: a written answer did not pass the checks." if fallback else ""))
 
 
 def sidebar(site: SiteData, full_view=None) -> None:
     with st.sidebar:
         st.markdown("### 💬 Ask the engine")
-        excerpts = f"{site.excerpts_total:,} excerpts" if site.ready else "the evidence store"
-        st.caption(f"Searches {excerpts} from public posts and reviews and shows the evidence behind an answer.")
+        st.caption("Ask about SIP behaviour. Answers come only from public posts and reviews, with the evidence "
+                   "one click away.")
         if full_view is not None:
             st.page_link(full_view, label="Open the full research view", icon="🔎")
         st.info("Research tool, not investment advice. It does not recommend funds or calculate returns.",

@@ -8,6 +8,12 @@ import ask
 import ui
 from site_data import SiteData
 
+PROBLEM_PHRASES = {"instalment_failed": "failed instalments", "withdrawal_problem": "withdrawal problems",
+                   "app_bug": "app bugs", "cannot_pause_or_change_amount": "rigid SIP controls",
+                   "support_not_resolving": "unresolved support issues",
+                   "debited_after_cancel_or_twice": "double or post-cancel debits",
+                   "confusing_returns_or_progress": "confusing returns", "losses_shake_confidence": "early losses",
+                   "amount_too_high": "an amount that is too high"}
 
 def render(site: SiteData) -> None:
     page = site.pages.get("segments")
@@ -15,13 +21,17 @@ def render(site: SiteData) -> None:
         ui.not_ready(site.missing or ["Data/site/segments.json (run python -m src.site_export.run)"])
         return
     t, ft = page["tiles"], page["first_time"]
-    no_problem = ft["no_problem"] / ft["n"] if ft["n"] else 0
-    top_ft = ft["failure_modes"][0]["label"].lower() if ft["failure_modes"] else "none stated"
-    ui.page_header("04 · Segments",
-                   f"{ft['n']} posts come from first-time investors; {no_problem:.0%} describe no problem, and the "
-                   f"most common problem they name is {top_ft}",
-                   "How do patterns differ across segments (income, age, source of money, who influenced them)? "
-                   "What is specific to first-time investors?")
+    ft_top = ft["failure_modes"][0] if ft["failure_modes"] else None
+    overall = ((site.pages.get("overview") or {}).get("failure_modes", {}).get("all", {}).get("rows") or [None])[0]
+    if ft_top:
+        problem = PROBLEM_PHRASES.get(ft_top["key"], ft_top["label"].lower())
+        title = (f"First-time investors face the same top problem: {problem}"
+                 if overall and overall["key"] == ft_top["key"] else f"First-time investors’ top problem: {problem}")
+    else:
+        title = "How patterns differ by investor segment"
+    ui.page_header("04 · Segments", title,
+                   "On this page: patterns by income, age and source of money, first-time investors, and investor "
+                   "types from the survey.")
     st.info("Segment tags exist only where a writer states them, so most posts are 'not stated'.", icon="ℹ️")
     ui.stat_tiles([
         ("Posts stating a segment", ui.tile_value(t["stated"], share=True), "share of SIP posts"),
@@ -46,7 +56,7 @@ def render(site: SiteData) -> None:
     s = page["survey"]
     if s.get("status") == "computed":
         n = s["sample"]["n"]
-        ui.survey_heading(s, "Survey patterns")
+        ui.survey_heading(s, "Investor types from the survey")
         cols = st.columns(len(s["patterns"]))
         for col, p in zip(cols, s["patterns"]):
             col.markdown(f'<div class="sde-tile"><div class="label">{p["name"]}</div>'

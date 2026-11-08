@@ -168,6 +168,23 @@ def test_routing_uses_sections_when_they_exist(monkeypatch, tmp_path):
     assert b["notes"] == []
 
 
+def test_a_chosen_section_overrides_routing(monkeypatch, tmp_path):
+    """The "Break down by segment" follow-up must be answered from Segments, whatever its wording."""
+    index = tmp_path / "sections_index.json"
+    index.write_text('[{"page": "Drop-offs", "section_id": "failure-modes", "title": "Failure modes", "text": "t"},'
+                     ' {"page": "Segments", "section_id": "segments", "title": "Patterns by segment", "text": "s",'
+                     '  "key_numbers": {"Experienced (experience): posts": 160}}]')
+    monkeypatch.setattr(config, "SECTIONS_INDEX_FILE", index)
+    section = [{"id": "failure-modes", "score": 0.7, "text": "t", "meta": {"page": "Drop-offs", "section_id": "failure-modes"}}]
+    r = retriever(rows(20, 0.8), section)
+    chosen = r.retrieve("How does this differ by investor segment? What leads investors to stop a SIP?", section="segments")
+    assert chosen["status"] == "evidence" and chosen["route"]["section"] == "segments" and chosen["route"]["chosen"]
+    assert chosen["page_link"] == "Segments → Patterns by segment"
+    assert chosen["section_data"]["key_numbers"] == {"Experienced (experience): posts": 160}
+    unknown = r.retrieve("What leads investors to stop a SIP?", section="no-such-section")
+    assert unknown["route"]["section"] == "failure-modes"  # an unknown id falls back to routing
+
+
 # --- API --------------------------------------------------------------------------------------
 
 def test_api_retrieve_and_validation(monkeypatch):
@@ -179,6 +196,7 @@ def test_api_retrieve_and_validation(monkeypatch):
         assert client.get("/api/health").json()["excerpts"] == 20
         body = client.post("/api/retrieve", json={"question": "Why do SIPs fail?", "app": "Groww"}).json()
         assert body["status"] == "evidence" and body["filters"] == {"app": "Groww"}
+        assert client.post("/api/retrieve", json={"question": "Why do SIPs fail?", "section": "segments"}).status_code == 200
         assert client.post("/api/retrieve", json={"question": "hi"}).status_code == 422
 
 
@@ -197,3 +215,11 @@ def test_real_store_end_to_end(real):
     assert all(e["url"] and e["record_id"] for e in b["excerpts"])
     assert real.retrieve("What is the capital of France?")["reason"] == "off_topic"
     assert real.retrieve("Which is the safest SIP?")["reason"] == "investment_advice"
+
+
+def test_real_segment_follow_up_uses_the_segments_section(real):
+    q = ("How does this differ by investor segment (first-time or experienced, income, age)? "
+         "What leads investors to pause, reduce or stop a SIP?")
+    b = real.retrieve(q, section="segments")
+    assert b["route"]["section"] == "segments" and b["status"] in ("evidence", "insufficient_evidence")
+    assert "Experienced (experience): posts" in b["section_data"]["key_numbers"]

@@ -70,7 +70,9 @@ class Retriever:
         }
 
     def retrieve(self, question: str, *, app: str | None = None, source: str | None = None,
-                 doc_type: str | None = None) -> dict:
+                 doc_type: str | None = None, section: str | None = None) -> dict:
+        """`section` answers from that page section instead of routing (e.g. "segments" for the
+        "Break down by segment" follow-up); an unknown section id falls back to routing."""
         if self._router is None:
             self.warm_up()
         started = time.monotonic()
@@ -92,12 +94,14 @@ class Retriever:
         # 3. embed with the phase 3 model
         vector = self._embedder.embed([question])[0]
 
-        # 4. route to a section
+        # 4. route to a section (or use the one the caller chose)
         notes: list[str] = []
-        route, section_data = self._router.route(vector)
+        route, section_data = self._router.fixed(section) if section else (None, None)
+        if route is None:
+            route, section_data = self._router.route(vector)
         if not self._router.available:
             notes.append(NO_SECTIONS_NOTE)
-        elif route and route["score"] < config.ROUTE_MIN_SIMILARITY:
+        elif route and route["score"] is not None and route["score"] < config.ROUTE_MIN_SIMILARITY:
             return make_bundle(question, "out_of_scope", reason="off_topic", route=route, timing_ms=elapsed(),
                                detail=f"nearest section scored {route['score']} < {config.ROUTE_MIN_SIMILARITY}",
                                **common)

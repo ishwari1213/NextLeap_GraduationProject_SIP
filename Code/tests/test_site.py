@@ -1,6 +1,7 @@
 """Site tests: the data loader on synthetic reports, and every page rendered with Streamlit's
 AppTest against the real pipeline outputs (skipped if they are missing)."""
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -118,10 +119,15 @@ def test_every_page_renders(module):
     assert not at.exception, at.exception
     text = " ".join(m.value for m in at.markdown)
     assert "sde-title" in text  # the page header rendered
+    title = re.search(r'class="sde-title">(.*?)</div>', text).group(1)
+    assert not re.search(r"\d", title), f"page titles carry no research numbers: {title}"
     if module in ("overview", "journey", "dropoffs", "segments", "validation"):
         survey_loaded = config.SURVEY_RESPONSES_FILE.exists()
-        shows_survey = "investor survey" in text.lower() or "Survey patterns" in text or "Engine vs survey" in text
+        shows_survey = any(h in text for h in ("What the survey adds", "Investor types from the survey",
+                                                "Engine vs survey"))
         assert shows_survey if survey_loaded else ("Not computed" in text)
+    if module in ("validation", "method"):
+        assert "Engine vs human agreement" not in text
 
 
 @real_data

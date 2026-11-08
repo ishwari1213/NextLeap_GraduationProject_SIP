@@ -25,10 +25,11 @@ def render(site: SiteData) -> None:
     tiles = page["tiles"]
     ranked = [o for o in page["opportunities"]["all"] if o["score"] is not None]
     top = ranked[0] if ranked else None
-    title = (f"{top['name']} is the highest-potential opportunity, scoring {top['score']} of 100 across "
-             f"{page['scope_sizes']['all']:,} problem posts" if top else
+    title = (f"{top['name']}: the problem to solve first" if top else
              "No opportunity has enough posts to be scored yet")
-    ui.page_header("01 · Overview", title, "Which opportunity should Groww solve first, and why? What unmet needs emerge?")
+    ui.page_header("01 · Overview", title,
+                   "On this page: opportunities ranked by their effect on 12-month continuation, the metric tree and "
+                   "survey highlights.")
     ui.stat_tiles([
         ("Posts analysed", ui.tile_value(tiles["posts"]), "investor posts, reviews and comments, tagged"),
         ("SIP posts", ui.tile_value(tiles["sip_posts"], share=True), "share of posts that are about SIPs"),
@@ -57,7 +58,7 @@ def render(site: SiteData) -> None:
         "Score": o["score"], "Tag": o["tag"], "Note": o["note"],
     } for o in opps]), hide_index=True, width="stretch")
 
-    ui.heading("Metric tree: 12-month SIP continuation")
+    ui.heading("Metric tree")
     cols = st.columns(len(page["metric_tree"]))
     for col, node in zip(cols, page["metric_tree"]):
         col.markdown(f'<div class="sde-tile"><div class="label">{node["id"]} · {node["label"]}</div>'

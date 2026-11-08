@@ -15,12 +15,12 @@ def render(site: SiteData) -> None:
         return
     t = page["tiles"]
     top_help = t["top_help"]
-    title = (f"Investors start for long-term growth ({t['long_term']['n']} posts against {t['quick_gains']['n']} for "
-             f"quick gains) and, when unsure, most turn to {top_help['label'].lower()}" if top_help else
-             f"Investors start for long-term growth ({t['long_term']['n']} posts)")
+    long_term = t["long_term"]["n"] >= t["quick_gains"]["n"]
+    title = (("Investors start for the long term" if long_term else "Many investors start expecting quick gains")
+             + (", but seek help outside the app" if top_help else ""))
     ui.page_header("02 · Journey", title,
-                   "Why people start and what they expect, what changes after starting, what they check and how "
-                   "often, what confuses them inside the app, what they do outside it.")
+                   "On this page: why investors start, what they check, what confuses them in the app and where "
+                   "they look for help.")
     ui.stat_tiles([
         ("Posts expecting long-term growth", ui.tile_value(t["long_term"]),
          f"{t['quick_gains']['n']} expect quick gains{ui.low(t['quick_gains'])}"),
@@ -32,7 +32,7 @@ def render(site: SiteData) -> None:
 
     stages = page["stages"]
     rows = [{**r, "label": f"{r['label']} ({r['with_problem']} with a problem)"} for r in stages["rows"]]
-    ui.bars(rows, "SIP posts by journey stage",
+    ui.bars(rows, "Where in the journey problems appear",
             f"Stage stated in {stages['stated']:,} of {stages['base']:,} SIP posts. Bars count posts; the label gives "
             "how many of them report a problem.")
     left, right = st.columns(2)
@@ -49,17 +49,17 @@ def render(site: SiteData) -> None:
     s = page["survey"]
     if s.get("status") == "computed":
         n = s["sample"]["n"]
-        ui.survey_heading(s, "From the investor survey: checking, expectations and help")
+        ui.survey_heading(s)
         left, right = st.columns(2)
         with left:
-            ui.bars(s["checking"], f"How often they check (n = {n})",
-                    f"{s['weekly_or_more']} of {n} check weekly or more often.")
-            ui.bars(s["expectation"], f"What they expected from SIPs (n = {n})")
-            ui.bars(s["influence"], f"Who influenced them to start (n = {n}, several picks allowed)")
+            ui.bars(s["checking"], "How often they check",
+                    f"{n} SIP investors; {s['weekly_or_more']} of {n} check weekly or more often.")
+            ui.bars(s["expectation"], "What they expected from SIPs", f"{n} SIP investors.")
+            ui.bars(s["influence"], "Who influenced them to start", f"{n} SIP investors; several picks allowed.")
         with right:
-            ui.bars(s["first_look"], f"What they look at first (n = {n})")
-            ui.bars(s["help"], f"Where they seek answers when unsure (n = {n}, several picks allowed)")
-            ui.bars(s["profile"], f"How they describe themselves as investors (n = {n})")
+            ui.bars(s["first_look"], "What they look at first", f"{n} SIP investors.")
+            ui.bars(s["help"], "Where they seek answers when unsure", f"{n} SIP investors; several picks allowed.")
+            ui.bars(s["profile"], "How they describe themselves as investors", f"{n} SIP investors.")
     else:
         ui.not_computed_item("Survey: checking, feelings and help-seeking", s)
     ask.explore_buttons(["Why do people start a SIP, and what do they expect to happen?",

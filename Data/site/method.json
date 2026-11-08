@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T14:42:55+00:00",
+  "generated_at": "2026-11-08T02:54:11+00:00",
   "last_updated": "2026-11-01",
   "formula": "Score = 100 × (0.40 × reach + 0.30 × severity + 0.15 × stage fit + 0.15 × segment fit)",
   "weights": {
